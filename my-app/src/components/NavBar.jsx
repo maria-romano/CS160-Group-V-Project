@@ -1,9 +1,14 @@
+// src/components/NavBar.jsx
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 function NavBar() {
   return (
-    <nav style={{ background: '#333', padding: '1rem', color: 'white' }}>
-      <h1 style={{ margin: 0 }}>📈 Graph Builder</h1>
+    <nav className="navbar">
+      <ul className="nav-links">
+        <li><NavLink to="/dashboard">DASHBOARD</NavLink></li>
+        <li><NavLink to="/profile">PROFILE</NavLink></li>
+      </ul>
     </nav>
   );
 }
