@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import './Dashboard.css';
 import {
-  LineChart, Line,
+  ResponsiveContainer, LineChart, Line,
   BarChart, Bar,
   PieChart, Pie, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend
 } from 'recharts';
+
 
 function Dashboard() {
   const [selectedOptions, setSelectedOptions] = useState([]);
@@ -24,19 +25,19 @@ function Dashboard() {
     if (option === 'totalDonations') {
       return <div className="stat-card">Total Donations: $100</div>;
     }
-
+  
     if (option === 'totalDonors') {
       return <div className="stat-card">Total Donors: 10 Donors</div>;
     }
-
+  
     if (option === 'averageDonation') {
       return <div className="stat-card">Average Donation Amount: $10</div>;
     }
-
+  
     if (option === 'donationByTime') {
       let data = [];
       let xKey = '';
-
+  
       switch (timeGranularity) {
         case 'weekly':
           data = [
@@ -65,78 +66,86 @@ function Dashboard() {
         default:
           break;
       }
-
+  
       return (
-        <LineChart width={500} height={300} data={data}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey={xKey} stroke="#fff" />
-          <YAxis stroke="#fff" />
-          <Tooltip />
-          <Legend />
-          <Line type="monotone" dataKey="value" stroke="#00C49F" />
-        </LineChart>
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart data={data}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey={xKey} stroke="#fff" />
+            <YAxis stroke="#fff" />
+            <Tooltip />
+            <Legend />
+            <Line type="monotone" dataKey="value" stroke="#00C49F" />
+          </LineChart>
+        </ResponsiveContainer>
       );
     }
-
+  
     if (option === 'donorTypeChart') {
       const data = [
         { type: 'New', amount: 60 },
         { type: 'Returning', amount: 40 },
       ];
-
+  
       return (
-        <BarChart width={500} height={300} data={data} layout="vertical">
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis type="number" stroke="#fff" />
-          <YAxis dataKey="type" type="category" stroke="#fff" />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="amount" fill="#8884d8" />
-        </BarChart>
+        <ResponsiveContainer width="100%" height={300}>
+          <BarChart data={data} layout="vertical">
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis type="number" stroke="#fff" />
+            <YAxis dataKey="type" type="category" stroke="#fff" />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="amount" fill="#8884d8" />
+          </BarChart>
+        </ResponsiveContainer>
       );
     }
-
+  
     if (option === 'donationsByDonorType') {
       const data = [
         { group: 'New Donors', donations: 800 },
         { group: 'Returning Donors', donations: 1200 },
       ];
-
+  
       return (
-        <BarChart width={500} height={300} data={data}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="group" stroke="#fff" />
-          <YAxis stroke="#fff" />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="donations" fill="#00C49F" />
-        </BarChart>
+        <ResponsiveContainer width="100%" height={300}>
+          <BarChart data={data}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="group" stroke="#fff" />
+            <YAxis stroke="#fff" />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="donations" fill="#00C49F" />
+          </BarChart>
+        </ResponsiveContainer>
       );
     }
-
+  
     if (option === 'retentionRate') {
       return <div className="stat-card">30% Donor Retention Rate</div>;
     }
-
+  
     if (option === 'donationPerCampaign') {
       const data = [
         { campaign: 'Campaign 1', value: 400 },
         { campaign: 'Campaign 2', value: 650 },
         { campaign: 'Campaign 3', value: 300 },
       ];
-
+  
       return (
-        <BarChart width={500} height={300} data={data}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="campaign" stroke="#fff" />
-          <YAxis stroke="#fff" />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="value" fill="#FF8042" />
-        </BarChart>
+        <ResponsiveContainer width="100%" height={300}>
+          <BarChart data={data}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="campaign" stroke="#fff" />
+            <YAxis stroke="#fff" />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="value" fill="#FF8042" />
+          </BarChart>
+        </ResponsiveContainer>
       );
     }
-
+  
     if (option === 'goalProgress') {
       return (
         <div className="progress-container">
@@ -148,14 +157,15 @@ function Dashboard() {
         </div>
       );
     }
-
+  
     return null;
   };
+  
 
   return (
     <div className="dashboard-container">
       <button className="toggle-sidebar" onClick={() => setShowSidebar(!showSidebar)}>
-        {showSidebar ? '❌ Hide Customization' : '🛠 Show Customization'}
+        {showSidebar ? 'Hide Customization' : 'Show Customization'}
       </button>
 
       <div className={`main-content ${showSidebar ? 'with-sidebar' : 'full-width'}`}>
@@ -175,7 +185,7 @@ function Dashboard() {
 
         {showSidebar && (
           <div className="sidebar">
-            <h2>🛠 Customize Charts</h2>
+            <h2>Customize Charts</h2>
 
             {/* General Metrics */}
             <div className="metric-category">
