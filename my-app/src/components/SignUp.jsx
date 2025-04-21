@@ -21,6 +21,7 @@ function SignUp({ onSignUp }) {
       [name]: type === 'checkbox' ? checked : value
     });
     
+    // Clear error when field is being edited
     if (errors[name]) {
       setErrors({
         ...errors,
@@ -65,7 +66,9 @@ function SignUp({ onSignUp }) {
     
     if (validateForm()) {
       // Call the onSignUp function passed from App.jsx
-      onSignUp();
+      if (onSignUp) {
+        onSignUp();
+      }
       
       // Navigate to dashboard
       navigate('/dashboard');
@@ -73,29 +76,26 @@ function SignUp({ onSignUp }) {
   };
 
   return (
-    <div className="signup-container">
-      <div className="logo-container">
-        <Link to="/" className="logo-link">
-          <div className="logo">C</div>
-          <span className="logo-text">Donor Loop</span>
-        </Link>
-      </div>
-      
-      <div className="signup-form-container">
-        <div className="signup-card">
+    <div className="signup-fullscreen">
+      <div className="signup-content">
+        <div className="logo-container">
+          <img src="/Logo.png" alt="Donor Loop" className="logo-image" />
+          <h1 className="logo-text">Donor Loop</h1>
+        </div>
+        
+        <div className="form-container">
           <h2>Create a New Account</h2>
-          <p className="signup-subtitle">Come join our community! Let's set up your account.</p>
+          <p className="subtitle">Come join our community! Let's set up your account.</p>
           
-          <div className="already-have-account">
-            Already have one? <Link to="/signin" className="signin-link">Sign in here</Link>
+          <div className="signin-link">
+            Already have one? <Link to="/signin" className="accent-link">Sign in here</Link>
           </div>
           
           <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <label htmlFor="orgName">Organization Name</label>
+              <label>Organization Name</label>
               <input
                 type="text"
-                id="orgName"
                 name="orgName"
                 placeholder="NGO name"
                 value={formData.orgName}
@@ -106,10 +106,9 @@ function SignUp({ onSignUp }) {
             </div>
             
             <div className="form-group">
-              <label htmlFor="email">Email</label>
+              <label>Email</label>
               <input
                 type="email"
-                id="email"
                 name="email"
                 placeholder="organization email"
                 value={formData.email}
@@ -120,10 +119,9 @@ function SignUp({ onSignUp }) {
             </div>
             
             <div className="form-group">
-              <label htmlFor="password">Password</label>
+              <label>Password</label>
               <input
                 type="password"
-                id="password"
                 name="password"
                 placeholder="enter passkey"
                 value={formData.password}
@@ -134,10 +132,9 @@ function SignUp({ onSignUp }) {
             </div>
             
             <div className="form-group">
-              <label htmlFor="confirmPassword">Confirm Password</label>
+              <label>Confirm Password</label>
               <input
                 type="password"
-                id="confirmPassword"
                 name="confirmPassword"
                 placeholder="re-enter passkey"
                 value={formData.confirmPassword}
@@ -147,7 +144,7 @@ function SignUp({ onSignUp }) {
               {errors.confirmPassword && <span className="error-message">{errors.confirmPassword}</span>}
             </div>
             
-            <div className="form-group checkbox-group">
+            <div className="checkbox-group">
               <input
                 type="checkbox"
                 id="agreeTerms"
@@ -156,14 +153,14 @@ function SignUp({ onSignUp }) {
                 onChange={handleChange}
                 className={errors.agreeTerms ? 'checkbox-error' : ''}
               />
-              <label htmlFor="agreeTerms" className="checkbox-label">
+              <label htmlFor="agreeTerms">
                 I accept the terms
               </label>
               {errors.agreeTerms && <span className="error-message">{errors.agreeTerms}</span>}
             </div>
             
             <div className="terms-link">
-              <Link to="/terms">Read our Terms and Conditions</Link>
+              <Link to="/terms" className="accent-link">Read our Terms and Conditions</Link>
             </div>
             
             <button type="submit" className="join-button">Join</button>

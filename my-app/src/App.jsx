@@ -28,6 +28,9 @@ function App() {
             ? <Navigate to="/dashboard" /> 
             : <SignUp onSignUp={handleAuth} />
         } />
+        <Route path="/signup" element={<SignUp onSignUp={() => setIsAuthenticated(true)} />} />
+
+
 
         <Route 
           path="/dashboard" 

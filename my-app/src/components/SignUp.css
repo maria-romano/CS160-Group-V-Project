@@ -1,115 +1,101 @@
-.signup-container {
-    min-height: 100vh;
+/* Full screen sign-up styles */
+.signup-fullscreen {
     width: 100%;
-    background: linear-gradient(to bottom, #0b0b2d, #1d1d3f, #2b2b4f);
+    min-height: 100vh;
+    background-color: #0b0b2d;
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 0;
+    padding: 0;
+    color: white;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
+  
+  .signup-content {
+    width: 100%;
+    max-width: 1280px;
     padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   
   .logo-container {
     display: flex;
-    justify-content: flex-start;
-    width: 100%;
-    max-width: 1200px;
+    align-items: center;
+    gap: 1rem;
     margin-bottom: 2rem;
   }
   
-  .logo-link {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    text-decoration: none;
-  }
-  
-  .logo {
-    width: 2rem;
-    height: 2rem;
+  .logo-image {
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
-    background: conic-gradient(from 45deg, #00c49f, #4ba3ff);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-weight: bold;
   }
   
   .logo-text {
-    color: white;
-    font-size: 1.25rem;
+    font-size: 2rem;
     font-weight: 600;
+    color: white;
+    margin: 0;
   }
   
-  .signup-form-container {
+  .form-container {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 12px;
     width: 100%;
     max-width: 500px;
-    display: flex;
-    justify-content: center;
+    color: #333;
+    text-align: center;
   }
   
-  .signup-card {
-    background-color: white;
-    width: 100%;
-    border-radius: 12px;
-    padding: 2rem;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-  }
-  
-  .signup-card h2 {
+  .form-container h2 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
     font-size: 1.75rem;
     color: #333;
-    margin-bottom: 0.5rem;
   }
   
-  .signup-subtitle {
+  .subtitle {
     color: #666;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
   }
   
-  .already-have-account {
+  .signin-link {
     margin-bottom: 1.5rem;
     font-size: 0.9rem;
     color: #666;
   }
   
-  .signin-link {
+  .accent-link {
     color: #00c49f;
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 500;
   }
   
-  .signin-link:hover {
+  .accent-link:hover {
     text-decoration: underline;
   }
   
   .form-group {
     margin-bottom: 1.25rem;
+    text-align: left;
   }
   
   .form-group label {
     display: block;
     margin-bottom: 0.5rem;
     font-weight: 500;
-    color: #333;
   }
   
-  .form-group input[type="text"],
-  .form-group input[type="email"],
-  .form-group input[type="password"] {
+  .form-group input {
     width: 100%;
     padding: 0.75rem;
     border: 1px solid #e2e8f0;
     border-radius: 8px;
     font-size: 1rem;
-    transition: border-color 0.2s ease;
-  }
-  
-  .form-group input:focus {
-    outline: none;
-    border-color: #00c49f;
-    box-shadow: 0 0 0 3px rgba(0, 196, 159, 0.1);
   }
   
   .input-error {
@@ -121,20 +107,15 @@
     font-size: 0.8rem;
     margin-top: 0.25rem;
     display: block;
+    text-align: left;
   }
   
   .checkbox-group {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 0.5rem;
-  }
-  
-  .checkbox-group input[type="checkbox"] {
-    margin-top: 0.25rem;
-  }
-  
-  .checkbox-label {
-    font-weight: normal;
+    margin-bottom: 0.5rem;
+    text-align: left;
   }
   
   .checkbox-error {
@@ -142,18 +123,9 @@
   }
   
   .terms-link {
-    margin-top: -0.5rem;
+    text-align: left;
     margin-bottom: 1.5rem;
-  }
-  
-  .terms-link a {
-    color: #00c49f;
     font-size: 0.85rem;
-    text-decoration: none;
-  }
-  
-  .terms-link a:hover {
-    text-decoration: underline;
   }
   
   .join-button {
@@ -164,25 +136,56 @@
     border: none;
     border-radius: 8px;
     font-weight: 600;
+    font-size: 1rem;
     cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.1s ease;
+    transition: background-color 0.2s ease;
   }
   
   .join-button:hover {
     background-color: #222;
   }
   
-  .join-button:active {
-    transform: translateY(1px);
-  }
-  
-  /* Responsive styles */
+  /* Make sure the form properly adjusts on smaller screens */
   @media (max-width: 576px) {
-    .signup-card {
+    .signup-content {
+      padding: 1rem;
+    }
+    
+    .form-container {
       padding: 1.5rem;
     }
     
-    .signup-card h2 {
+    .logo-image {
+      width: 50px;
+      height: 50px;
+    }
+    
+    .logo-text {
       font-size: 1.5rem;
     }
+  }
+
+  body, html, #root {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #0b0b2d !important; /* Force the background color */
+  }
+  
+  .signup-fullscreen {
+    width: 100vw;  /* Use viewport width */
+    min-height: 100vh;  /* Use viewport height */
+    background-color: #0b0b2d !important;  /* Use !important to override */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    position: absolute;  /* Take it out of the normal flow */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    color: white;
   }
