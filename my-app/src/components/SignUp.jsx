@@ -1,77 +1,78 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import './SignUp.css';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import "./SignUp.css";
 
 function SignUp({ onSignUp }) {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    orgName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    agreeTerms: false
+    orgName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    agreeTerms: false,
   });
-  
+
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData({
       ...formData,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: type === "checkbox" ? checked : value,
     });
-    
+
     // Clear error when field is being edited
     if (errors[name]) {
       setErrors({
         ...errors,
-        [name]: ''
+        [name]: "",
       });
     }
   };
 
   const validateForm = () => {
     const newErrors = {};
-    
+
     if (!formData.orgName.trim()) {
-      newErrors.orgName = 'Organization name is required';
+      newErrors.orgName = "Organization name is required";
     }
-    
+
     if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
+      newErrors.email = "Email is required";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Email is invalid';
+      newErrors.email = "Email is invalid";
     }
-    
+
     if (!formData.password) {
-      newErrors.password = 'Password is required';
+      newErrors.password = "Password is required";
     } else if (formData.password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters';
+      newErrors.password = "Password must be at least 6 characters";
     }
-    
+
     if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
+      newErrors.confirmPassword = "Passwords do not match";
     }
-    
+
     if (!formData.agreeTerms) {
-      newErrors.agreeTerms = 'You must accept the terms and conditions';
+      newErrors.agreeTerms = "You must accept the terms and conditions";
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     if (validateForm()) {
       // Call the onSignUp function passed from App.jsx
       if (onSignUp) {
         onSignUp();
       }
-      
+
       // Navigate to dashboard
-      navigate('/dashboard');
+      //navigate('/dashboard');
+      navigate("/profile-setup");
     }
   };
 
@@ -82,15 +83,20 @@ function SignUp({ onSignUp }) {
           <img src="/Logo.png" alt="Donor Loop" className="logo-image" />
           <h1 className="logo-text">Donor Loop</h1>
         </div>
-        
+
         <div className="form-container">
           <h2>Create a New Account</h2>
-          <p className="subtitle">Come join our community! Let's set up your account.</p>
-          
+          <p className="subtitle">
+            Come join our community! Let's set up your account.
+          </p>
+
           <div className="signin-link">
-            Already have one? <Link to="/signin" className="accent-link">Sign in here</Link>
+            Already have one?{" "}
+            <Link to="/signin" className="accent-link">
+              Sign in here
+            </Link>
           </div>
-          
+
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label>Organization Name</label>
@@ -100,11 +106,13 @@ function SignUp({ onSignUp }) {
                 placeholder="NGO name"
                 value={formData.orgName}
                 onChange={handleChange}
-                className={errors.orgName ? 'input-error' : ''}
+                className={errors.orgName ? "input-error" : ""}
               />
-              {errors.orgName && <span className="error-message">{errors.orgName}</span>}
+              {errors.orgName && (
+                <span className="error-message">{errors.orgName}</span>
+              )}
             </div>
-            
+
             <div className="form-group">
               <label>Email</label>
               <input
@@ -113,11 +121,13 @@ function SignUp({ onSignUp }) {
                 placeholder="organization email"
                 value={formData.email}
                 onChange={handleChange}
-                className={errors.email ? 'input-error' : ''}
+                className={errors.email ? "input-error" : ""}
               />
-              {errors.email && <span className="error-message">{errors.email}</span>}
+              {errors.email && (
+                <span className="error-message">{errors.email}</span>
+              )}
             </div>
-            
+
             <div className="form-group">
               <label>Password</label>
               <input
@@ -126,11 +136,13 @@ function SignUp({ onSignUp }) {
                 placeholder="enter passkey"
                 value={formData.password}
                 onChange={handleChange}
-                className={errors.password ? 'input-error' : ''}
+                className={errors.password ? "input-error" : ""}
               />
-              {errors.password && <span className="error-message">{errors.password}</span>}
+              {errors.password && (
+                <span className="error-message">{errors.password}</span>
+              )}
             </div>
-            
+
             <div className="form-group">
               <label>Confirm Password</label>
               <input
@@ -139,11 +151,13 @@ function SignUp({ onSignUp }) {
                 placeholder="re-enter passkey"
                 value={formData.confirmPassword}
                 onChange={handleChange}
-                className={errors.confirmPassword ? 'input-error' : ''}
+                className={errors.confirmPassword ? "input-error" : ""}
               />
-              {errors.confirmPassword && <span className="error-message">{errors.confirmPassword}</span>}
+              {errors.confirmPassword && (
+                <span className="error-message">{errors.confirmPassword}</span>
+              )}
             </div>
-            
+
             <div className="checkbox-group">
               <input
                 type="checkbox"
@@ -151,19 +165,23 @@ function SignUp({ onSignUp }) {
                 name="agreeTerms"
                 checked={formData.agreeTerms}
                 onChange={handleChange}
-                className={errors.agreeTerms ? 'checkbox-error' : ''}
+                className={errors.agreeTerms ? "checkbox-error" : ""}
               />
-              <label htmlFor="agreeTerms">
-                I accept the terms
-              </label>
-              {errors.agreeTerms && <span className="error-message">{errors.agreeTerms}</span>}
+              <label htmlFor="agreeTerms">I accept the terms</label>
+              {errors.agreeTerms && (
+                <span className="error-message">{errors.agreeTerms}</span>
+              )}
             </div>
-            
+
             <div className="terms-link">
-              <Link to="/terms" className="accent-link">Read our Terms and Conditions</Link>
+              <Link to="/terms" className="accent-link">
+                Read our Terms and Conditions
+              </Link>
             </div>
-            
-            <button type="submit" className="join-button">Join</button>
+
+            <button type="submit" className="join-button">
+              Join
+            </button>
           </form>
         </div>
       </div>
