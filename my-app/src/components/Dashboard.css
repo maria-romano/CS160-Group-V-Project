@@ -31,13 +31,13 @@
 .full-width .chart-area {
   flex-grow: 1;
   padding: 2rem;
-  overflow-y: auto; /* Allow vertical scrolling */
+  overflow-y: auto;
   color: white;
 }
 
 .chart-wrapper {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); /* Ensures charts don't overflow */
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
   gap: 2rem;
   padding: 1rem;
 }
@@ -51,8 +51,63 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 350px; /* Ensure space for charts */
+  min-height: 350px;
   overflow: hidden;
+}
+
+.stat-card {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #00c49f;
+}
+
+.small-metric-card {
+  background-color: #1e1e2f;
+  color: #fff;
+  padding: 1rem;
+  border-radius: 1rem;
+  text-align: center;
+  width: 160px;
+  margin: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.metric-value {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.metric-label {
+  font-size: 0.9rem;
+  color: #bbb;
+  margin-top: 0.3rem;
+}
+
+
+.progress-container {
+  width: 100%;
+  text-align: left;
+  font-size: 1rem;
+}
+
+.progress-bar {
+  height: 20px;
+  background-color: #ccc;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: #00c49f;
+  transition: width 0.5s ease;
+}
+
+.progress-label {
+  text-align: right;
+  font-weight: bold;
 }
 
 .sidebar {
@@ -67,3 +122,13 @@
 .checkbox-group {
   margin-bottom: 1rem;
 }
+
+.nested-group {
+  margin-left: 1rem;
+}
+
+.metric-category {
+  margin-bottom: 2rem;
+}
+
+

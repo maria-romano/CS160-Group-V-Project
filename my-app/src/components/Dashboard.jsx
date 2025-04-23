@@ -23,15 +23,30 @@ function Dashboard() {
 
   const renderChart = (option) => {
     if (option === 'totalDonations') {
-      return <div className="stat-card">Total Donations: $100</div>;
+      return (
+        <div className="small-metric-card">
+          <div className="metric-value">$100</div>
+          <div className="metric-label">Total Donations</div>
+        </div>
+      );
     }
   
     if (option === 'totalDonors') {
-      return <div className="stat-card">Total Donors: 10 Donors</div>;
+      return (
+        <div className="small-metric-card">
+          <div className="metric-value">10</div>
+          <div className="metric-label">Total Donors</div>
+        </div>
+      );
     }
   
     if (option === 'averageDonation') {
-      return <div className="stat-card">Average Donation Amount: $10</div>;
+      return (
+        <div className="small-metric-card">
+          <div className="metric-value">$10</div>
+          <div className="metric-label">Average Donation</div>
+        </div>
+      );
     }
   
     if (option === 'donationByTime') {
@@ -122,8 +137,14 @@ function Dashboard() {
     }
   
     if (option === 'retentionRate') {
-      return <div className="stat-card">30% Donor Retention Rate</div>;
+      return (
+        <div className="small-metric-card">
+          <div className="metric-value">30%</div>
+          <div className="metric-label">Donor Retention Rate</div>
+        </div>
+      );
     }
+
   
     if (option === 'donationPerCampaign') {
       const data = [
@@ -160,28 +181,49 @@ function Dashboard() {
   
     return null;
   };
-  
+
+
 
   return (
+
     <div className="dashboard-container">
       <button className="toggle-sidebar" onClick={() => setShowSidebar(!showSidebar)}>
         {showSidebar ? 'Hide Customization' : 'Show Customization'}
       </button>
 
+
       <div className={`main-content ${showSidebar ? 'with-sidebar' : 'full-width'}`}>
+        {/* Top row for special charts */}
+        <div className="flex flex-wrap gap-4 mb-6">
+          {selectedOptions
+            .filter(option =>
+              ['totalDonations', 'totalDonors', 'averageDonation', 'retentionRate'].includes(option)
+            )
+            .map(option => (
+              <div key={option} className="w-[200px]">
+                {renderChart(option)}
+              </div>
+            ))}
+        </div>
+  
+        {/* Regular chart area */}
         <div className="chart-area">
           {selectedOptions.length === 0 ? (
             <p>Select options on the right to view charts.</p>
           ) : (
-            <div className="chart-wrapper">
-              {selectedOptions.map((option) => (
-                <div key={option} className="chart-card">
-                  {renderChart(option)}
-                </div>
-              ))}
+            <div className="chart-wrapper grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {selectedOptions
+                .filter(option =>
+                  !['totalDonations', 'totalDonors', 'averageDonation', 'retentionRate'].includes(option)
+                )
+                .map(option => (
+                  <div key={option} className="chart-card">
+                    {renderChart(option)}
+                  </div>
+                ))}
             </div>
           )}
-        </div>
+         </div> 
 
         {showSidebar && (
           <div className="sidebar">
