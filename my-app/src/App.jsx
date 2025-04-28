@@ -20,10 +20,17 @@ function App() {
   // Track if user is in profile setup flow
   const [isNewSignup, setIsNewSignup] = useState(false);
 
+  const [posts, setPosts] = useState([]); 
+
   // handles login and signups
   const handleAuth = () => {
     setIsAuthenticated(true);
     setIsNewSignup(true); // Mark as new signup to allow profile setup flow
+  };
+
+  // handles post saving
+  const addPost = (post) => {
+    setPosts([...posts, post]);
   };
 
   return (
@@ -66,11 +73,11 @@ function App() {
         />
         <Route
           path="/profile"
-          element={isAuthenticated ? <Profile /> : <Navigate to="/signup" />}
+          element={isAuthenticated ? <Profile posts={posts} /> : <Navigate to="/signup" />}
         />
         <Route
           path="/create-post"
-          element={isAuthenticated ? <CreatePost /> : <Navigate to="/signup" />}
+          element={isAuthenticated ? <CreatePost addPost={addPost} /> : <Navigate to="/signup" />}
         />
       </Routes>
     </Router>
