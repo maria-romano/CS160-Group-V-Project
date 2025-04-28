@@ -22,6 +22,12 @@ function App() {
 
   const [posts, setPosts] = useState([]); 
 
+  //Store dashboard so it doesnt delete everytime i go through states
+  const [selectedOptions, setSelectedOptions] = useState([]);
+  const [showSidebar, setShowSidebar] = useState(true);
+  const [timeGranularity, setTimeGranularity] = useState('monthly');
+
+
   // handles login and signups
   const handleAuth = () => {
     setIsAuthenticated(true);
@@ -67,10 +73,27 @@ function App() {
           element={<ProfileSetup onComplete={() => setIsNewSignup(false)} />}
         />
 
-        <Route
+        {/* <Route
           path="/dashboard"
           element={isAuthenticated ? <Dashboard /> : <Navigate to="/signup" />}
+        /> */}
+        
+        <Route
+          path="/dashboard"
+          element={isAuthenticated ? (
+            <Dashboard
+              selectedOptions={selectedOptions}
+              setSelectedOptions={setSelectedOptions}
+              showSidebar={showSidebar}
+              setShowSidebar={setShowSidebar}
+              timeGranularity={timeGranularity}
+              setTimeGranularity={setTimeGranularity}
+            />
+          ) : (
+            <Navigate to="/signup" />
+          )}
         />
+
         <Route
           path="/profile"
           element={isAuthenticated ? <Profile posts={posts} /> : <Navigate to="/signup" />}

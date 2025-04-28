@@ -8,10 +8,11 @@ import {
 } from 'recharts';
 
 
-function Dashboard() {
-  const [selectedOptions, setSelectedOptions] = useState([]);
-  const [showSidebar, setShowSidebar] = useState(true);
-  const [timeGranularity, setTimeGranularity] = useState('monthly');
+function Dashboard({ selectedOptions, setSelectedOptions, showSidebar, setShowSidebar, timeGranularity, setTimeGranularity })
+  {
+  // const [selectedOptions, setSelectedOptions] = useState([]);
+  // const [showSidebar, setShowSidebar] = useState(true);
+  // const [timeGranularity, setTimeGranularity] = useState('monthly');
 
   const handleCheckboxChange = (option) => {
     setSelectedOptions((prev) =>
