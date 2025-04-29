@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import Dashboard from "./components/Dashboard";
+import Dashboard2 from "./components/Dashboard2";
 import Profile from "./components/Profile";
 import CreatePost from "./components/CreatePost";
 import SignUp from "./components/SignUp";
@@ -81,7 +82,7 @@ function App() {
         <Route
           path="/dashboard"
           element={isAuthenticated ? (
-            <Dashboard
+            <Dashboard2
               selectedOptions={selectedOptions}
               setSelectedOptions={setSelectedOptions}
               showSidebar={showSidebar}
