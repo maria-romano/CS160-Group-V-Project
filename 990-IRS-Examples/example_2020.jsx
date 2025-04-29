@@ -1,0 +1,426 @@
+const example_2020 = `
+efile GRAPHIC rint - DO NOT PROCESS 
+As Filed Data -
+DLN:93491307008241 
+0MB No. 1545-0052 
+Form990-PF 
+Return of Private Foundation 
+2020 
+or Section 4947(a)(1) Trust Treated as Private Foundation 
+Department of the Treasury 
+Internal Revenue Service 
+Do not enter social security numbers on this form as it may be made public. 
+Go to www.irs.gov/Form990PF for instructions and the latest information. 
+Open to Public 
+Inspection 
+For calendar year 2020, or tax year beginning 01-01-2020 
+, and ending 12-31-2020 
+Name of foundation 
+A Employer identification number 
+THE ROCKEFELLER FOUNDATION 
+13-1659629 
+Number and street (or P.O. box number if mail is not delivered to street address) I Room/suite 
+B Telephone number (see instructions) 
+420 FIFTH AVENUE 
+(212) 852-8361 
+City or town, state or province, country, and ZIP or foreign postal code 
+NEW YORK, NY 100182702 
+C If exemption application is pending, check here 
+D 
+G Check all that apply: 
+D Initial return 
+D Initial return of a former public charity 
+D 1. Foreign organizations, check here ............ 
+D 
+D Final return 
+D Amended return 
+2. Foreign organizations meeting the 85% 
+D 
+D Address change 
+D Name change 
+test, check here and attach computation ... 
+Section 501(c)(3) exempt private foundation 
+E If private foundation status was terminated 
+D 
+H Check type of organization: 
+under section 507(b)(1)(A), check here ..... 
+D Section 4947(a)(1) nonexempt charitable trust 
+D Other taxable private foundation 
+I Fair market value of all assets at end 
+J Accounting method: D Cash 
+Accrual 
+F If the foundation is in a 60-month termination 
+D 
+of year (from Part II, col. (c), 
+D Other (specify) 
+under section 507(b)(1)(B), check here. ..... 
+line 16) ~$ 7,117,904,789 
+(Part I, column (d) must be on cash basis.) 
+IDII Analysis of Revenue and Expenses (The total 
+(a) 
+Revenue and 
+(d) Disbursements 
+of amounts in columns (b), (c), and (d) may not necessarily 
+(b) 
+Net investment 
+(c) Adjusted net 
+for charitable 
+expenses per 
+income 
+income 
+books 
+purposes 
+equal the amounts in column (a) (see instructions).) 
+(cash basis only) 
+1 
+Contributions, gifts, grants, etc., received (attach 
+schedule) 
+11,539 
+2 
+Check~ D if the foundation is not required to attach 
+Sch. B 
+3 
+Interest on savings and temporary cash investments 
+916,144 
+916,144 
+4 
+Dividends and interest from securities 
+16,198,406 
+26,953,811 
+Sa 
+Gross rents 
+b 
+Net rental income or (loss) 
+Cl) 
+6a 
+Net gain or (loss) from sale of assets not on line 10 
+341,670,958 
+; 
+a; 
+b 
+Gross sales price for all assets on line 6a 
+> 
+492,086,795 
+Cl) 
+a: 
+7 
+Capital gain net income (from Part IV, line 2) 
+98,500,063 
+8 
+Net short-term capital gain 
+9 
+Income modifications 
+10a 
+Gross sales less returns and allowances I 
+b 
+Less: Cost of goods sold 
+I 
+C 
+Gross profit or (loss) (attach schedule) 
+11 
+Other income (attach schedule) 
+-2,733,403 
+437,055 
+12 
+Total. Add lines 1 through 11 
+356,063,644 
+126,807,073 
+13 
+Compensation of officers, directors, trustees, etc. 
+4,119,227 
+1,243,782 
+2,875,446 
+14 
+Other employee salaries and wages 
+33,798,097 
+4,408,707 
+28,715,435 
+oJ'> 
+15 
+Pension plans, employee benefits 
+Cl) 
+10,848,559 
+962,100 
+11,732,475 
+oJ'> 
+16a 
+Legal fees (attach schedule) 
+3,005,616 
+162,003 
+3,579,939 
+b 
+Accounting fees (attach schedule) 
+529,420 
+235,400 
+236,020 
+)( 
+LiJ 
+C 
+Other professional fees (attach schedule) 
+37,310,910 
+4,819,351 
+32,207,356 
+Cl) 
+> 
+17 
+Interest 
+332,901 
+2,127,858 
+332,901 
+·z; 
+18 
+Taxes (attach schedule) (see instructions) 
+'J( 
+653,416 
+2,228,907 
+0 
+·c 
+19 
+Depreciation (attach schedule) and depletion 
+2,790,352 
+252,516 
+.... 
+"O 
+20 
+Occupancy 
+3,282,507 
+113,257 
+3,169,250 
+<( 
+"O 
+21 
+Travel, conferences, and meetings 
+2,010,511 
+44,724 
+1,965,283 
+::::: 
+22 
+Printing and publications 
+367,586 
+13,681 
+353,906 
+(";; 
+CT. 
+23 
+Other expenses (attach schedule) 
+11,322,353 
+37,607,477 
+8,265,146 
+C ... 
+24 
+Total operating and administrative expenses . 
+(";; 
+! 
+Add lines 13 through 23 
+110,371,455 
+54,219,763 
+93,433,157 
+0 
+25 
+Contributions, gifts, grants paid 
+175,229,304 
+175,106,160 
+26 
+Total expenses and disbursements. Add lines 24 and 
+25 
+285,600,759 
+54,219,763 
+268,539,317 
+27 
+Subtract line 26 from line 12: 
+a 
+Excess of revenue over expenses and 
+disbursements 
+70,462,885 
+b 
+Net investment income (if negative, enter -0-) 
+72,587,310 
+C 
+Adjusted net income (if negative, enter -0-) 
+For Paperwork Reduction Act Notice, see mstruct1ons. 
+Cat. No. 11289X 
+Form 990-PF (2020) 
+
+Form 990-PF (2020) 
+Page 2 
+111111 
+Balance Sheets 
+Attached schedules and amounts in the description column 
+Beginning of year 
+End of year 
+should be for end-of-year amounts only. (See instructions.) 
+(a) Book Value 
+(b) Book Value 
+(c) Fair Market Value 
+1 
+Cash-n on-i nterest-bea ring 
+33,978,439 
+4,479,551 
+4,479,551 
+2 
+Savings and temporary cash investments 
+242,539,094 
+1,001,176,980 
+1,001,176,980 
+3 
+Accounts receivable 
+Less: allowance for doubtful accounts~ 
+4 
+Pledges receivable~ 
+Less: allowance for doubtful accounts~ 
+5 
+Grants receivable • 
+6 
+Receivables due from officers, directors, trustees, and other 
+disqualified persons (attach schedule) (see instructions) 
+7 
+Other notes and loans receivable (attach schedule)~ 
+Less: allowance for doubtful accounts~ 
+,J", 
+8 
+Inventories for sale or use 
+-
+al 
+9 
+Prepaid expenses and deferred charges 
+,J", 
+,J", 
+10a 
+Investments-U.S. and state government obligations (attach schedule) 
+33,044,574 
+74,746,724 
+74,746,724 
+b 
+Investments-corporate stock (attach schedule) 
+11,348,183 
+14,654,975 
+14,654,975 
+C 
+Investments-corporate bonds (attach schedule) 
+11 
+Investments-land, buildings, and equipment: basis~ 
+Less: accumulated depreciation (attach schedule)~ 
+12 
+Investments-mortgage loans 
+13 
+Investments-other (attach schedule) 
+4,537,017,372 
+5,945,823,288 
+5,945,823,288 
+14 
+Land, buildings, and equipment: basis~ 
+24,151,994 
+Less: accumulated depreciation (attach schedule)~ 19,145,031 
+9,467,788 
+5,006,963 
+5,006,963 
+15 
+Other assets ( describe 
+) 
+62,512,002 
+72,016,308 
+72,016,308 
+16 
+Total assets (to be completed by all filers-see the 
+instructions. Also, see page 1, item I) 
+4,929,907,452 
+7,117,904,789 
+7,117,904,789 
+17 
+Accounts payable and accrued expenses • 
+9,557,398 
+10,016,939 
+18 
+Grants payable 
+72,837,268 
+73,460,414 
+,J", 
+Deferred revenue 
+al 
+19 
+:e 
+20 
+Loans from officers, directors, trustees, and other disqualified persons 
+:0 
+(;) 
+21 
+Mortgages and other notes payable (attach schedule). 
+:J 
+22 
+Other liabilities (describe~ 
+) 
+51,974,786 
+753,386,722 
+23 
+Total liabilities(add lines 17 through 22) 
+134,369,452 
+836,864,075 
+,J", 
+Foundations that follow FASB ASC 958, check here 
+al 
+u 
+and complete lines 24, 25, 29 and 30. 
+:: 
+(;) 24 
+(;) 
+Net assets without donor restrictions 
+4,795,538,000 
+6,281,040,714 
+Qj 25 
+Net assets with donor restrictions • 
+"O :: 
+D 
+Foundations that do not follow FASB ASC 958, check here 
+u.. 
+.... 
+and complete lines 26 through 30 . 
+0 
+,J", 
+26 
+Capital stock, trust principal, or current funds 
+-
+al 27 
+Paid-in or capital surplus, or land, bldg., and equipment fund 
+,J", 
+,J", 
+28 
+Retained earnings, accumulated income, endowment, or other funds 
+- 29 
+Total net assets or fund balances (see instructions) 
+4,795,538,000 
+6,281,040,714 
+Cl) 
+2 
+Total liabilities and net assets/fund balances (see instructions) 
+30 
+4,929,907,452 
+7,117,904,789 
+•:.r: ••••• Analysis of Changes in Net Assets or Fund Balances 
+1 
+Total net assets or fund balances at beginning of year-Part II, column (a), line 29 (must agree with end-
+of-year figure reported on prior year's return) 
+1 
+4,795,538,000 
+2 
+Enter amount from Part I, line 27a 
+2 
+70,462,885 
+3 
+Other increases not included in line 2 (itemize)~ 
+3 
+1,427,464,380 
+4 
+Add lines 1, 2, and 3 
+4 
+6,293,465,265 
+5 
+Decreases not included in line 2 (itemize)~ 
+5 
+12,424,551 
+6 
+Total net assets or fund balances at end of year (line 4 minus line 5)-Part II, column (b), line 29 
+6 
+6,281,040,714 
+Form 990-PF (2020) 
+
+`;
