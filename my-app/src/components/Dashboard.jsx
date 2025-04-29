@@ -7,7 +7,6 @@ import {
   XAxis, YAxis, CartesianGrid, Tooltip, Legend
 } from 'recharts';
 
-
 function Dashboard({ selectedOptions, setSelectedOptions, showSidebar, setShowSidebar, timeGranularity, setTimeGranularity })
   {
   // const [selectedOptions, setSelectedOptions] = useState([]);
