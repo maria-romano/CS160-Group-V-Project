@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import './Dashboard.css';
+import React, { useEffect, useState } from 'react';
+import './Dashboard2.css';
 import {
-  ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
+  ResponsiveContainer, LineChart, Line,
+  BarChart, Bar,
+  XAxis, YAxis, CartesianGrid, Tooltip, Legend
 } from 'recharts';
 
 const fallbackData = {
@@ -54,158 +56,188 @@ const fallbackData = {
   }
 };
 
-export default function Dashboard2({ selectedOptions, setSelectedOptions, showSidebar, setShowSidebar, timeGranularity, setTimeGranularity }) {
+// export default function Dashboard2({ selectedOptions, setSelectedOptions, showSidebar, setShowSidebar, timeGranularity, setTimeGranularity }) {
+//   const [data, setData] = useState(null);
+
+//   useEffect(() => {
+//     async function fetchData() {
+//       // try {
+//       //   const txtResponse = await fetch("/exp_2020.txt");
+//       //   const txt = await txtResponse.text();
+
+//       //   const reagentResponse = await fetch("https://your-reagent-api-endpoint.com/parse", {
+//       //     method: "POST",
+//       //     headers: { "Content-Type": "text/plain" },
+//       //     body: txt
+//       //   });
+
+//       //   if (!reagentResponse.ok) throw new Error("Reagent call failed");
+
+//       //   const jsonData = await reagentResponse.json();
+//       //   setData(jsonData);
+//       // } catch (err) {
+//       //   console.error("Falling back to hardcoded JSON due to error:", err);
+//       //   setData(fallbackData);
+//       // }
+//       setData(fallbackData);
+//     }
+//     fetchData();
+//   }, []);
+
+// // At the top, no change...
+// // ...
+
+export default function Dashboard2({ selectedOptions, setSelectedOptions, showSidebar, setShowSidebar }) {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    async function fetchData() {
-      // try {
-      //   // const txtResponse = await fetch("/exp_2020.txt");
-      //   // const txt = await txtResponse.text();
-      //   // const reagentResponse = await fetch("https://your-reagent-api-endpoint.com/parse", {
-      //   //   method: "POST",
-      //   //   headers: { "Content-Type": "text/plain" },
-      //   //   body: txt
-      //   // });
-      //   // if (!reagentResponse.ok) throw new Error("Reagent call failed");
-      //   // const jsonData = await reagentResponse.json();
-      //   // setData(jsonData);
-
-      //   setData(fallbackData);
-      // } catch (err) {
-      //   console.error("Failed to fetch data, using fallback.", err);
-      //   setData(fallbackData);
-      // }
-      setData(fallbackData);
-    }
-    fetchData();
+    setData(fallbackData);
   }, []);
 
+  if (!data) return <div>Loading...</div>;
+
+  const { financials, expenses_breakdown: breakdown } = data;
+
   const handleCheckboxChange = (option) => {
-    setSelectedOptions((prev) =>
+    setSelectedOptions(prev =>
       prev.includes(option)
-        ? prev.filter((opt) => opt !== option)
+        ? prev.filter(opt => opt !== option)
         : [...prev, option]
     );
   };
 
-  const renderChart = (option) => {
-    if (!data) return null;
-    const f = data.financials;
+  const smallMetrics = [
+    { key: 'total_revenue', label: 'Total Revenue' },
+    { key: 'total_expenses', label: 'Total Expenses' },
+    { key: 'net_investment_income', label: 'Net Investment Income' },
+    { key: 'disbursements_for_charitable_purposes', label: 'Charitable Disbursements' },
+    { key: 'contributions_gifts_grants_received', label: 'Gifts/Grants Received' },
+  ];
 
-    const metricCard = (label, value) => (
-      <div className="small-metric-card">
-        <div className="metric-value">${value.toLocaleString()}</div>
-        <div className="metric-label">{label}</div>
+  const assetKeys = [
+    { key: 'net_assets_or_fund_balances', label: 'Net Assets/Fund Balances' },
+    { key: 'total_assets', label: 'Total Assets' },
+    { key: 'liabilities', label: 'Liabilities' },
+  ];
+
+  const renderSmallMetric = (key, label) => (
+    <div className="small-metric-card" key={key}>
+      <div className="metric-value">${financials[key].toLocaleString()}</div>
+      <div className="metric-label">{label}</div>
+    </div>
+  );
+
+  const renderLineChart = (key, label) => (
+    <div className="chart-card" key={key}>
+      <h3>{label}</h3>
+      <ResponsiveContainer width="100%" height={300}>
+        <LineChart data={[
+          { name: 'Start', value: financials[key].beginning_of_year },
+          { name: 'End', value: financials[key].end_of_year },
+        ]}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" stroke="#fff" />
+          <YAxis stroke="#fff" />
+          <Tooltip formatter={val => `$${val.toLocaleString()}`} />
+          <Line type="monotone" dataKey="value" stroke="#00C49F" />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
+  );
+
+  const renderExpensesBar = () => {
+    const formatted = Object.entries(breakdown).map(([label, value]) => ({ label, value }));
+    const total = formatted.reduce((sum, d) => sum + d.value, 0);
+    return (
+      <div className="chart-card">
+        <h3>Total Expenses: ${total.toLocaleString()}</h3>
+        <ResponsiveContainer width="100%" height={400}>
+          <BarChart data={formatted}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="label" hide />
+            <YAxis stroke="#fff" />
+            <Tooltip formatter={(val, name, props) => [`$${val.toLocaleString()}`, props.payload.label]} />
+            <Bar dataKey="value" fill="#FF8042" />
+          </BarChart>
+        </ResponsiveContainer>
       </div>
     );
-
-    switch (option) {
-      case 'totalRevenue':
-        return metricCard("Total Revenue", f.total_revenue);
-      case 'totalExpenses':
-        return metricCard("Total Expenses", f.total_expenses);
-      case 'netInvestmentIncome':
-        return metricCard("Net Investment Income", f.net_investment_income);
-      case 'disbursements':
-        return metricCard("Charitable Disbursements", f.disbursements_for_charitable_purposes);
-      case 'contributionsReceived':
-        return metricCard("Contributions Received", f.contributions_gifts_grants_received);
-      case 'netAssetsChart':
-        const netAssetsData = [
-          { name: 'Beginning', netAssets: f.net_assets_or_fund_balances.beginning_of_year, totalAssets: f.total_assets.beginning_of_year, liabilities: f.liabilities.beginning_of_year },
-          { name: 'End', netAssets: f.net_assets_or_fund_balances.end_of_year, totalAssets: f.total_assets.end_of_year, liabilities: f.liabilities.end_of_year }
-        ];
-        return (
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={netAssetsData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" stroke="#fff" />
-              <YAxis stroke="#fff" />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="netAssets" fill="#00C49F" />
-              <Bar dataKey="totalAssets" fill="#8884d8" />
-              <Bar dataKey="liabilities" fill="#FF8042" />
-            </BarChart>
-          </ResponsiveContainer>
-        );
-      default:
-        return null;
-    }
   };
 
   return (
     <div className="dashboard-container">
-      <button className="toggle-sidebar" onClick={() => setShowSidebar(!showSidebar)}>
-        {showSidebar ? 'Hide Customization' : 'Show Customization'}
-      </button>
-
-      <div className={`main-content ${showSidebar ? 'with-sidebar' : 'full-width'}`}>
-        <div className="flex flex-wrap gap-4 mb-6">
-          {selectedOptions
-            .filter(option => [
-              'totalRevenue', 'totalExpenses', 'netInvestmentIncome', 'disbursements', 'contributionsReceived'
-            ].includes(option))
-            .map(option => (
-              <div key={option} className="w-[200px]">
-                {renderChart(option)}
-              </div>
-            ))}
-        </div>
-
-        <div className="chart-area">
-          {selectedOptions.length === 0 ? (
-            <p>Select options on the right to view metrics and charts.</p>
-          ) : (
-            <div className="chart-wrapper grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {selectedOptions
-                .filter(option => ![
-                  'totalRevenue', 'totalExpenses', 'netInvestmentIncome', 'disbursements', 'contributionsReceived'
-                ].includes(option))
-                .map(option => (
-                  <div key={option} className="chart-card">
-                    {renderChart(option)}
-                  </div>
-                ))}
+      <div className="dashboard-top-bar">
+        <button className="toggle-sidebar" onClick={() => setShowSidebar(!showSidebar)}>
+          {showSidebar ? 'Hide Customization' : 'Show Customization'}
+        </button>
+      </div>
+      <div className="dashboard-content-area">
+        <div className="main-content">
+          {/* Small Metrics Container */}
+          <div className="small-metrics-container">
+            {smallMetrics
+              .filter(metric => selectedOptions.includes(metric.key))
+              .map(metric => renderSmallMetric(metric.key, metric.label))}
+          </div>
+  
+          {/* Chart Container */}
+          <div className="chart-container">
+            <div className="chart-wrapper">
+              {assetKeys
+                .filter(metric => selectedOptions.includes(metric.key))
+                .map(metric => renderLineChart(metric.key, metric.label))}
             </div>
-          )}
+  
+            {selectedOptions.includes('expenses_breakdown') && renderExpensesBar()}
+          </div>
         </div>
-
+  
         {showSidebar && (
           <div className="sidebar">
             <h2>Customize Charts</h2>
+  
             <div className="metric-category">
-              <h3>Financial Metrics</h3>
-              {[
-                { key: 'totalRevenue', label: 'Total Revenue' },
-                { key: 'totalExpenses', label: 'Total Expenses' },
-                { key: 'netInvestmentIncome', label: 'Net Investment Income' },
-                { key: 'disbursements', label: 'Charitable Disbursements' },
-                { key: 'contributionsReceived', label: 'Contributions Received' },
-              ].map(({ key, label }) => (
-                <div className="checkbox-group" key={key}>
+              <h3>Small Metrics</h3>
+              {smallMetrics.map(metric => (
+                <div className="checkbox-group" key={metric.key}>
                   <label>
                     <input
                       type="checkbox"
-                      onChange={() => handleCheckboxChange(key)}
-                      checked={selectedOptions.includes(key)}
+                      onChange={() => handleCheckboxChange(metric.key)}
+                      checked={selectedOptions.includes(metric.key)}
                     />
-                    {label}
+                    {metric.label}
                   </label>
                 </div>
               ))}
             </div>
+  
             <div className="metric-category">
-              <h3>Charts</h3>
+              <h3>Asset & Liability Charts</h3>
+              {assetKeys.map(metric => (
+                <div className="checkbox-group" key={metric.key}>
+                  <label>
+                    <input
+                      type="checkbox"
+                      onChange={() => handleCheckboxChange(metric.key)}
+                      checked={selectedOptions.includes(metric.key)}
+                    />
+                    {metric.label}
+                  </label>
+                </div>
+              ))}
+            </div>
+  
+            <div className="metric-category">
+              <h3>Expenses</h3>
               <div className="checkbox-group">
                 <label>
                   <input
                     type="checkbox"
-                    onChange={() => handleCheckboxChange('netAssetsChart')}
-                    checked={selectedOptions.includes('netAssetsChart')}
+                    onChange={() => handleCheckboxChange('expenses_breakdown')}
+                    checked={selectedOptions.includes('expenses_breakdown')}
                   />
-                  Net Assets / Liabilities
+                  Expense Breakdown Chart
                 </label>
               </div>
             </div>
@@ -214,6 +246,6 @@ export default function Dashboard2({ selectedOptions, setSelectedOptions, showSi
       </div>
     </div>
   );
+  
 }
-
 
