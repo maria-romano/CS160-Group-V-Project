@@ -13,6 +13,7 @@ import Profile from "./components/Profile";
 import CreatePost from "./components/CreatePost";
 import SignUp from "./components/SignUp";
 import ProfileSetup from "./components/ProfileSetup";
+import HomePage from "./components/HomePage"; // Add this import
 
 import "./App.css";
 function App() {
@@ -46,10 +47,15 @@ function App() {
       {isAuthenticated && <NavBar />}
 
       <Routes>
+        {/* Add HomePage route */}
+        <Route path="/" element={<HomePage />} />
+
+        {/* Modified original root route to "/home" as a fallback */}
         <Route
-          path="/"
+          path="/home"
           element={<Navigate to={isAuthenticated ? "/dashboard" : "/signup"} />}
         />
+        
         <Route
           path="/signup"
           element={
