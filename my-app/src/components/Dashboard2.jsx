@@ -131,38 +131,67 @@ export default function Dashboard2({ selectedOptions, setSelectedOptions, showSi
     <div className="chart-card" key={key}>
       <h3>{label}</h3>
       <ResponsiveContainer width="100%" height={300}>
-        <LineChart data={[
-          { name: 'Start', value: financials[key].beginning_of_year },
-          { name: 'End', value: financials[key].end_of_year },
-        ]}>
+        <LineChart
+          data={[
+            { name: 'Start', value: financials[key].beginning_of_year },
+            { name: 'End', value: financials[key].end_of_year },
+          ]}
+          margin={{ top: 20, right: 30, left: 80, bottom: 5 }}
+        >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" stroke="#fff" />
-          <YAxis stroke="#fff" />
+          <YAxis stroke="#fff" width={80} />
           <Tooltip formatter={val => `$${val.toLocaleString()}`} />
           <Line type="monotone" dataKey="value" stroke="#00C49F" />
         </LineChart>
       </ResponsiveContainer>
     </div>
   );
+  
 
   const renderExpensesBar = () => {
     const formatted = Object.entries(breakdown).map(([label, value]) => ({ label, value }));
     const total = formatted.reduce((sum, d) => sum + d.value, 0);
+  
     return (
       <div className="chart-card">
         <h3>Total Expenses: ${total.toLocaleString()}</h3>
-        <ResponsiveContainer width="100%" height={400}>
-          <BarChart data={formatted}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="label" hide />
-            <YAxis stroke="#fff" />
-            <Tooltip formatter={(val, name, props) => [`$${val.toLocaleString()}`, props.payload.label]} />
-            <Bar dataKey="value" fill="#FF8042" />
-          </BarChart>
-        </ResponsiveContainer>
+        <div style={{ width: '100%', overflowX: 'auto' }}>
+          <div style={{ width: `${formatted.length * 100}px` }}> {/* ~100px per bar */}
+            <ResponsiveContainer width="100%" height={400}>
+              <BarChart
+                data={formatted}
+                margin={{ top: 20, right: 30, left: 100, bottom: 100 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis
+                  dataKey="label"
+                  stroke="#fff"
+                  interval={0}
+                  angle={-45}
+                  textAnchor="end"
+                  height={120}
+                />
+                <YAxis
+                  stroke="#fff"
+                  width={100}
+                  tickFormatter={(val) => `$${val.toLocaleString()}`}
+                />
+                <Tooltip
+                  formatter={(val, name, props) => [`$${val.toLocaleString()}`, props.payload.label]}
+                />
+                <Bar dataKey="value" fill="#FF8042" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
       </div>
     );
   };
+  
+  
+  
+  
 
   return (
     <div className="dashboard-container">
