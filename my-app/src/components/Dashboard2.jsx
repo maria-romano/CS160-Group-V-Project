@@ -178,7 +178,12 @@ export default function Dashboard2({ selectedOptions, setSelectedOptions, showSi
                   tickFormatter={(val) => `$${val.toLocaleString()}`}
                 />
                 <Tooltip
-                  formatter={(val, name, props) => [`$${val.toLocaleString()}`, props.payload.label]}
+                  formatter={(value) => [`$${value.toLocaleString()}`]} // just return the value, no "value:"
+                  labelFormatter={(label) =>
+                    label
+                      .replace(/_/g, ' ')
+                      .replace(/\b\w/g, (char) => char.toUpperCase())
+                  }
                 />
                 <Bar dataKey="value" fill="#FF8042" />
               </BarChart>
