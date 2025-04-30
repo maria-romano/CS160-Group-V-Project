@@ -1,39 +1,55 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import './Profile.css';
 
 function Profile({ posts }) {
   const navigate = useNavigate();
 
   return (
-    <div style={{ padding: '2rem', color: 'white' }}>
-      <h1>👤 Profile Page</h1>
-      <button onClick={() => navigate('/create-post')}>New Post</button>
+    <div className="profile-wrapper">
+      <div className="profile-header">
+        <h1>Your Posts</h1>
+        <img
+          src="/pfp.jpg"
+          alt="Profile"
+          className="profile-avatar"
+        />
+      </div>
 
-      <h2>Your Posts</h2>
-      {posts.length === 0 ? (
-        <p>No posts yet.</p>
-      ) : (
-        posts.map((post, index) => (
-          <div key={index} style={{ background: '#333', padding: '1rem', margin: '1rem 0', borderRadius: '8px' }}>
-            <h3 style={post.titleStyles}>{post.title}</h3>
-            <p style={post.descriptionStyles}>{post.description}</p>
-            {post.media && post.media.type.startsWith('image/') && (
-              <img 
-                src={URL.createObjectURL(post.media)} 
-                alt="Post media" 
-                style={{ maxWidth: '100%', marginTop: '1rem', borderRadius: '0.5rem' }} 
-              />
-            )}
-            {post.media && post.media.type.startsWith('video/') && (
-              <video 
-                controls 
-                src={URL.createObjectURL(post.media)} 
-                style={{ maxWidth: '100%', marginTop: '1rem', borderRadius: '0.5rem' }}
-              />
-            )}
-          </div>
-        ))
-      )}
+      <div className="posts-container">
+        {posts.length === 0 ? (
+          <p>No posts yet.</p>
+        ) : (
+          posts.map((post, index) => (
+            <div className="post-card" key={index}>
+              {post.media && post.media.type.startsWith('image/') && (
+                <img
+                  src={URL.createObjectURL(post.media)}
+                  alt="Post media"
+                  className="post-media"
+                />
+              )}
+
+              <div className="post-content">
+                <h3 className="post-title" style={{ color: 'black', ...post.titleStyles }}>
+                  {post.title}
+                </h3>
+              </div>
+
+              <div className="post-stats">
+                <div><strong>Impressions:</strong> <span>0</span></div>
+                <div><strong>Engagements:</strong> <span>0</span></div>
+                <div><strong>Profile Visits:</strong> <span>0</span></div>
+                <div><strong>Shares:</strong> <span>0</span></div>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+
+      <button className="create-post-button" onClick={() => navigate('/create-post')}>
+        Create Post
+      </button>
     </div>
   );
 }

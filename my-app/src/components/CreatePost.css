@@ -1,162 +1,257 @@
 .create-post-page {
-    min-height: 100vh;
-    background: linear-gradient(to bottom right, #1e1e2f, #2c2c54);
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 2rem;
-    font-family: 'Arial', sans-serif;
-  }
-  
-  .create-post-container {
-    width: 100%;
-    max-width: 800px;
-    background: #fff;
-    border-radius: 0.75rem;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-    padding: 2rem;
-    margin-top: 2rem;
-  }
-  
-  .create-post-title {
-    font-size: 1.75rem;
-    font-weight: bold;
-    color: #1e1e1e;
-    margin-bottom: 1rem;
-  }
-  
-  .create-post-subtitle {
-    color: #555;
-    margin-bottom: 2rem;
-  }
-  
-  .create-post-input,
-  .create-post-textarea {
-    width: 100%;
-    background: #ffffff; 
-    border: 1px solid #ccc;
-    border-radius: 0.5rem;
-    padding: 0.75rem;
-    margin-bottom: 1rem;
-    font-size: 1rem;
-    color: #000000; 
-  }
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #1e1e2f, #2c2c54);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2rem;
+  font-family: 'Arial', sans-serif;
+  color: #000;
+}
 
-  .create-post-input::placeholder, 
-  .create-post-textarea::placeholder {
-    font-family: Arial, sans-serif;  
-    color: #a0a0a0;                 
-    font-size: 1rem;
-  }
-  
-  .create-post-textarea {
-    min-height: 150px;
-    resize: vertical;
-  }
-  
-  .formatting-buttons {
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-  }
-  
-  .formatting-buttons button {
-    padding: 0.25rem 0.5rem;
-    border: 1px solid #ccc;
-    background: #fff;
-    cursor: pointer;
-    border-radius: 0.25rem;
-  }
-  
-  .upload-box {
-    border: 2px dashed #ccc;
-    border-radius: 0.5rem;
-    padding: 1rem;
-    text-align: center;
-    color: #666;
-    margin-bottom: 1.5rem;
-    min-height: 250px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-  }
+.create-post-container {
+  width: 100%;
+  max-width: 900px;
+  background: #fff;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+}
 
-  .media-preview {
-    max-width: 100%;
-    max-height: 200px;
-    object-fit: contain;
-    border-radius: 0.5rem;
-  }
-  
-  .customize-controls {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
-  }
-  
-  .customize-controls select,
-  .customize-controls input[type="number"],
-  .customize-controls input[type="color"],
-  .edit-button {
-    background: #ffffff;       
-    color: #000000;          
-    border: 1px solid #ccc;
-    padding: 0.4rem;
-    border-radius: 0.25rem;
-    font-size: 0.9rem;
-    cursor: pointer;
-    }
-  
-  .create-post-buttons {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 2rem;
-    gap: 1rem;    
-  }
-  
-  .create-post-button {
-    background-color: #1e1e1e;
-    color: #fff;
-    padding: 0.5rem 2rem;
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    font-size: 1rem;
-  }
-  
-  .create-post-button:hover {
-    background-color: #333;
-  }
-  
-  .review-box {
-    border: 1px solid #ccc;
-    border-radius: 0.5rem;
-    padding: 1rem;
-    background: #fafafa;
-  }
+.customize-step {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
 
-  .reupload-button {
-    background: none;
-    border: 1px solid #ccc;
-    padding: 0.4rem 1rem;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    font-size: 0.9rem;
-    color: #333;
-    transition: all 0.2s ease-in-out;
-  }
-  
-  .reupload-button:hover {
-    background-color: #f0f0f0;
-    border-color: #999;
-  }
-  
-  .customize-section-header {
-    color: #000000;
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-  }
+.customize-field {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  align-items: flex-start;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 1.5rem;
+}
+
+.customize-left {
+  flex: 1;
+}
+
+.customize-right {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.customize-right h4 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.customize-right select,
+.customize-right input[type="number"] {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background-color: #ffffff; 
+  color: black;              
+}
+
+.customize-right input[type="color"] {
+  width: 25px;    
+  height: 25px;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  background-color: #ffffff; 
+}
+
+.style-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.style-buttons button {
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+  border-radius: 0.25rem;
+  font-weight: bold;
+  color: black;   
+}
+
+.section-label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  display: block;
+  font-size: 1rem;
+  color: black;
+}
+
+.label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.custom-text {
+  min-height: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.media-preview {
+  max-width: 100%;
+  max-height: 180px;
+  object-fit: contain;
+  border-radius: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.edit-btn {
+  margin-top: 0.5rem;
+  padding: 0.4rem 1rem;
+  border: 1px solid #000;
+  background: #fff;
+  border-radius: 999px;
+  cursor: pointer;
+  color: black;
+}
+
+.create-post-buttons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: auto;
+  padding-top: 1.25rem;
+}
+
+.create-post-button {
+  background-color: #1e1e1e;
+  color: #fff;
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  margin: 0;
+  transition: background 0.2s ease;
+}
+
+.create-post-button:hover {
+  background-color: #333;
+}
+
+.style-buttons button.active {
+  background-color: #ddd;
+  border-color: #888;
+}
+
+
+.style-buttons button.bold-btn {
+  font-weight: bold;
+}
+
+.style-buttons button.italic-btn {
+  font-style: italic;
+}
+
+.upload-box {
+  border: 2px dashed #ccc;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  text-align: center;
+  color: #666;
+  margin-bottom: 1.5rem;
+  min-height: 200px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  transition: border-color 0.3s ease;
+}
+
+.upload-box:hover {
+  border-color: #888;
+}
+
+.upload-box input[type="file"] {
+  margin-top: 1rem;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.upload-box::before {
+  content: '';
+  background-image: url('/upload.png'); 
+  background-size: 125px;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 80px;
+  height: 80px;
+  margin-bottom: 0.75rem;
+  display: block;
+  z-index: 1;
+}
+
+.upload-box.has-media::before {
+  display: none;
+}
+
+.upload-box.has-media {
+  border: none;
+}
+
+.upload-box p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #333;
+  z-index: 1;
+}
+
+.create-post-input,
+.create-post-textarea {
+  width: 100%;
+  max-width: 100%;
+  display: block;
+  margin: 0 auto 1rem auto;
+  background: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  font-size: 1rem;
+  color: #000000;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+.create-post-input::placeholder,
+.create-post-textarea::placeholder {
+  font-family: Arial, sans-serif;
+  color: #a0a0a0;
+  font-size: 1rem;
+}
+
+.create-post-textarea {
+  min-height: 150px;
+  resize: vertical;
+}
