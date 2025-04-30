@@ -2,10 +2,14 @@ import React, { useState } from "react";
 import { Menu, Upload } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import "./ProfileSetup.css";
+import NavBar from "./NavBar";
 
 export default function ProfileSetup({ onComplete }) {
   const navigate = useNavigate();
   const [selectedCauses, setSelectedCauses] = useState(["Animals"]);
+  const [profileImage, setProfileImage] = useState(null);
+  const [mission, setMission] = useState("");
+  const [fundDirection, setFundDirection] = useState("");
 
   const toggleCause = (cause) => {
     if (selectedCauses.includes(cause)) {
@@ -15,10 +19,43 @@ export default function ProfileSetup({ onComplete }) {
     }
   };
 
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file && file.type.startsWith("image/")) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setProfileImage(event.target.result);
+        // Save to localStorage for use in other components
+        localStorage.setItem("profileImage", event.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSubmit = () => {
+    if (validateForm()) {
+      // Save profile data to localStorage
+      localStorage.setItem("orgMission", mission);
+      localStorage.setItem("fundDirection", fundDirection);
+      localStorage.setItem("selectedCauses", JSON.stringify(selectedCauses));
+
+      if (onComplete) {
+        onComplete();
+      } else {
+        navigate("/form990-upload");
+      }
+    }
+  };
+
+  const validateForm = () => {
+    // Add your form validation logic here
+    // For now, we'll assume the form is always valid
+    return true;
+  };
+
   const causes = [
     "Animals",
     "Churches",
-    "Islamic",
     "Journalism",
     "Disaster Relief",
     "Arts",
@@ -29,19 +66,26 @@ export default function ProfileSetup({ onComplete }) {
     "Environment",
     "Music",
     "LGBTQIA",
+    "Human Rights",
+    "Microfinance",
+    "Elderly Support",
+    "Youth Empowerment",
+    "Housing & Homelessness",
+    "Food Security",
+    "Water & Sanitation",
+    "Legal Aid",
+    "Disability Services",
+    "Indigenous Rights",
   ];
 
   return (
     <div className="profile-page">
       {/* Header */}
-      <header className="profile-header">
-        <div className="profile-logo">
-          <div className="logo-icon">D</div>
-          <span className="logo-text">Donor Loop</span>
+      <header className="home-header">
+        <div className="logo-container">
+          <img src="/Logo.png" alt="Donor Loop Logo" className="logo-image" />
+          <h1 className="logo-text">Donor Loop</h1>
         </div>
-        <button className="menu-button">
-          <Menu size={24} />
-        </button>
       </header>
 
       {/* Content */}
@@ -55,10 +99,29 @@ export default function ProfileSetup({ onComplete }) {
 
         {/* Image Upload */}
         <div className="image-upload">
-          <div className="upload-circle">
-            <Upload className="upload-icon" size={32} />
-          </div>
-          <span className="upload-text">Upload or Drag Image</span>
+          <input
+            type="file"
+            id="profile-image"
+            accept="image/*"
+            onChange={handleImageUpload}
+            style={{ display: "none" }}
+          />
+          <label htmlFor="profile-image" className="upload-label">
+            {profileImage ? (
+              <img
+                src={profileImage}
+                alt="Profile"
+                className="profile-preview"
+              />
+            ) : (
+              <div className="upload-circle">
+                <Upload className="upload-icon" size={32} />
+              </div>
+            )}
+            <span className="upload-text">
+              {profileImage ? "Change Image" : "Upload or Drag Image"}
+            </span>
+          </label>
         </div>
 
         {/* Textareas */}
@@ -70,6 +133,8 @@ export default function ProfileSetup({ onComplete }) {
             <textarea
               className="form-textarea"
               placeholder="Minimum 150 words"
+              value={mission}
+              onChange={(e) => setMission(e.target.value)}
             />
           </div>
 
@@ -80,6 +145,8 @@ export default function ProfileSetup({ onComplete }) {
             <textarea
               className="form-textarea"
               placeholder="Minimum 100 words"
+              value={fundDirection}
+              onChange={(e) => setFundDirection(e.target.value)}
             />
           </div>
 
@@ -110,17 +177,7 @@ export default function ProfileSetup({ onComplete }) {
 
         {/* Next Button */}
         <div className="next-button-container">
-          <button
-            className="next-button"
-            onClick={() => {
-              // Call the onComplete callback if provided
-              if (onComplete) {
-                onComplete();
-              }
-              // Navigate to dashboard
-              navigate("/dashboard");
-            }}
-          >
+          <button className="next-button" onClick={handleSubmit}>
             Next
           </button>
         </div>

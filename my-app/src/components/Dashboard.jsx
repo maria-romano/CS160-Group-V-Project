@@ -1,17 +1,14 @@
-import React, { useState } from 'react';
-import './Dashboard.css';
-import {
-  ResponsiveContainer, LineChart, Line,
-  BarChart, Bar,
-  PieChart, Pie, Cell,
-  XAxis, YAxis, CartesianGrid, Tooltip, Legend
-} from 'recharts';
+import React, { useState } from "react";
+import "./Dashboard.css";
 
-function Dashboard({ selectedOptions, setSelectedOptions, showSidebar, setShowSidebar, timeGranularity, setTimeGranularity })
-  {
-  // const [selectedOptions, setSelectedOptions] = useState([]);
-  // const [showSidebar, setShowSidebar] = useState(true);
-  // const [timeGranularity, setTimeGranularity] = useState('monthly');
+function Dashboard() {
+  const [showSidebar, setShowSidebar] = useState(false);
+  const [selectedOptions, setSelectedOptions] = useState([
+    "totalDonations",
+    "totalDonors",
+    "averageDonation",
+    "donorTypeChart",
+  ]);
 
   const handleCheckboxChange = (option) => {
     setSelectedOptions((prev) =>
@@ -22,7 +19,7 @@ function Dashboard({ selectedOptions, setSelectedOptions, showSidebar, setShowSi
   };
 
   const renderChart = (option) => {
-    if (option === 'totalDonations') {
+    if (option === "totalDonations") {
       return (
         <div className="small-metric-card">
           <div className="metric-value">$100</div>
@@ -30,8 +27,8 @@ function Dashboard({ selectedOptions, setSelectedOptions, showSidebar, setShowSi
         </div>
       );
     }
-  
-    if (option === 'totalDonors') {
+
+    if (option === "totalDonors") {
       return (
         <div className="small-metric-card">
           <div className="metric-value">10</div>
@@ -39,8 +36,8 @@ function Dashboard({ selectedOptions, setSelectedOptions, showSidebar, setShowSi
         </div>
       );
     }
-  
-    if (option === 'averageDonation') {
+
+    if (option === "averageDonation") {
       return (
         <div className="small-metric-card">
           <div className="metric-value">$10</div>
@@ -48,40 +45,40 @@ function Dashboard({ selectedOptions, setSelectedOptions, showSidebar, setShowSi
         </div>
       );
     }
-  
-    if (option === 'donationByTime') {
+
+    if (option === "donationByTime") {
       let data = [];
-      let xKey = '';
-  
+      let xKey = "";
+
       switch (timeGranularity) {
-        case 'weekly':
+        case "weekly":
           data = [
-            { week: 'Week 1', value: 100 },
-            { week: 'Week 2', value: 150 },
-            { week: 'Week 3', value: 200 },
+            { week: "Week 1", value: 100 },
+            { week: "Week 2", value: 150 },
+            { week: "Week 3", value: 200 },
           ];
-          xKey = 'week';
+          xKey = "week";
           break;
-        case 'monthly':
+        case "monthly":
           data = [
-            { month: 'Jan', value: 300 },
-            { month: 'Feb', value: 400 },
-            { month: 'Mar', value: 250 },
+            { month: "Jan", value: 300 },
+            { month: "Feb", value: 400 },
+            { month: "Mar", value: 250 },
           ];
-          xKey = 'month';
+          xKey = "month";
           break;
-        case 'yearly':
+        case "yearly":
           data = [
-            { year: '2022', value: 1200 },
-            { year: '2023', value: 1500 },
-            { year: '2024', value: 1300 },
+            { year: "2022", value: 1200 },
+            { year: "2023", value: 1500 },
+            { year: "2024", value: 1300 },
           ];
-          xKey = 'year';
+          xKey = "year";
           break;
         default:
           break;
       }
-  
+
       return (
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={data}>
@@ -95,13 +92,13 @@ function Dashboard({ selectedOptions, setSelectedOptions, showSidebar, setShowSi
         </ResponsiveContainer>
       );
     }
-  
-    if (option === 'donorTypeChart') {
+
+    if (option === "donorTypeChart") {
       const data = [
-        { type: 'New', amount: 60 },
-        { type: 'Returning', amount: 40 },
+        { type: "New", amount: 60 },
+        { type: "Returning", amount: 40 },
       ];
-  
+
       return (
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={data} layout="vertical">
@@ -115,13 +112,13 @@ function Dashboard({ selectedOptions, setSelectedOptions, showSidebar, setShowSi
         </ResponsiveContainer>
       );
     }
-  
-    if (option === 'donationsByDonorType') {
+
+    if (option === "donationsByDonorType") {
       const data = [
-        { group: 'New Donors', donations: 800 },
-        { group: 'Returning Donors', donations: 1200 },
+        { group: "New Donors", donations: 800 },
+        { group: "Returning Donors", donations: 1200 },
       ];
-  
+
       return (
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={data}>
@@ -135,8 +132,8 @@ function Dashboard({ selectedOptions, setSelectedOptions, showSidebar, setShowSi
         </ResponsiveContainer>
       );
     }
-  
-    if (option === 'retentionRate') {
+
+    if (option === "retentionRate") {
       return (
         <div className="small-metric-card">
           <div className="metric-value">30%</div>
@@ -145,14 +142,13 @@ function Dashboard({ selectedOptions, setSelectedOptions, showSidebar, setShowSi
       );
     }
 
-  
-    if (option === 'donationPerCampaign') {
+    if (option === "donationPerCampaign") {
       const data = [
-        { campaign: 'Campaign 1', value: 400 },
-        { campaign: 'Campaign 2', value: 650 },
-        { campaign: 'Campaign 3', value: 300 },
+        { campaign: "Campaign 1", value: 400 },
+        { campaign: "Campaign 2", value: 650 },
+        { campaign: "Campaign 3", value: 300 },
       ];
-  
+
       return (
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={data}>
@@ -166,212 +162,233 @@ function Dashboard({ selectedOptions, setSelectedOptions, showSidebar, setShowSi
         </ResponsiveContainer>
       );
     }
-  
-    if (option === 'goalProgress') {
+
+    if (option === "goalProgress") {
       return (
         <div className="progress-container">
           <label>Fundraising Goal Progress</label>
           <div className="progress-bar">
-            <div className="progress-fill" style={{ width: '50%' }}></div>
+            <div className="progress-fill" style={{ width: "50%" }}></div>
           </div>
           <div className="progress-label">50%</div>
         </div>
       );
     }
-  
+
     return null;
   };
 
-
-
   return (
+    <div className="dashboard-page">
+      <div className="dashboard-container">
+        <button
+          className="toggle-sidebar"
+          onClick={() => setShowSidebar(!showSidebar)}
+        >
+          {showSidebar ? "Hide Customization" : "Show Customization"}
+        </button>
 
-    <div className="dashboard-container">
-      <button className="toggle-sidebar" onClick={() => setShowSidebar(!showSidebar)}>
-        {showSidebar ? 'Hide Customization' : 'Show Customization'}
-      </button>
+        <div
+          className={`main-content ${
+            showSidebar ? "with-sidebar" : "full-width"
+          }`}
+        >
+          {/* Top row for special charts */}
+          <div className="flex flex-wrap gap-4 mb-6">
+            {selectedOptions
+              .filter((option) =>
+                [
+                  "totalDonations",
+                  "totalDonors",
+                  "averageDonation",
+                  "retentionRate",
+                ].includes(option)
+              )
+              .map((option) => (
+                <div key={option} className="w-[200px]">
+                  {renderChart(option)}
+                </div>
+              ))}
+          </div>
 
-
-      <div className={`main-content ${showSidebar ? 'with-sidebar' : 'full-width'}`}>
-        {/* Top row for special charts */}
-        <div className="flex flex-wrap gap-4 mb-6">
-          {selectedOptions
-            .filter(option =>
-              ['totalDonations', 'totalDonors', 'averageDonation', 'retentionRate'].includes(option)
-            )
-            .map(option => (
-              <div key={option} className="w-[200px]">
-                {renderChart(option)}
+          {/* Regular chart area */}
+          <div className="chart-area">
+            {selectedOptions.length === 0 ? (
+              <p>Select options on the right to view charts.</p>
+            ) : (
+              <div className="chart-wrapper grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {selectedOptions
+                  .filter(
+                    (option) =>
+                      ![
+                        "totalDonations",
+                        "totalDonors",
+                        "averageDonation",
+                        "retentionRate",
+                      ].includes(option)
+                  )
+                  .map((option) => (
+                    <div key={option} className="chart-card">
+                      {renderChart(option)}
+                    </div>
+                  ))}
               </div>
-            ))}
-        </div>
-  
-        {/* Regular chart area */}
-        <div className="chart-area">
-          {selectedOptions.length === 0 ? (
-            <p>Select options on the right to view charts.</p>
-          ) : (
-            <div className="chart-wrapper grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {selectedOptions
-                .filter(option =>
-                  !['totalDonations', 'totalDonors', 'averageDonation', 'retentionRate'].includes(option)
-                )
-                .map(option => (
-                  <div key={option} className="chart-card">
-                    {renderChart(option)}
-                  </div>
-                ))}
+            )}
+          </div>
+
+          {/* Sidebar content */}
+          {showSidebar && (
+            <div className="sidebar">
+              <h2>Customize Charts</h2>
+
+              {/* General Metrics */}
+              <div className="metric-category">
+                <h3>General Metrics</h3>
+                <div className="checkbox-group">
+                  <label>
+                    <input
+                      type="checkbox"
+                      onChange={() => handleCheckboxChange("totalDonations")}
+                      checked={selectedOptions.includes("totalDonations")}
+                    />
+                    Total Donations
+                  </label>
+                </div>
+                <div className="checkbox-group">
+                  <label>
+                    <input
+                      type="checkbox"
+                      onChange={() => handleCheckboxChange("totalDonors")}
+                      checked={selectedOptions.includes("totalDonors")}
+                    />
+                    Total Donors
+                  </label>
+                </div>
+                <div className="checkbox-group">
+                  <label>
+                    <input
+                      type="checkbox"
+                      onChange={() => handleCheckboxChange("averageDonation")}
+                      checked={selectedOptions.includes("averageDonation")}
+                    />
+                    Average Donation Amount
+                  </label>
+                </div>
+              </div>
+
+              {/* Time-based Metrics */}
+              <div className="metric-category">
+                <h3>Time-based Metrics</h3>
+                <div className="checkbox-group">
+                  <label>
+                    <input
+                      type="checkbox"
+                      onChange={() => handleCheckboxChange("donationByTime")}
+                      checked={selectedOptions.includes("donationByTime")}
+                    />
+                    Total Donation by Time
+                  </label>
+                </div>
+                <div className="checkbox-group nested-group">
+                  <label>
+                    <input
+                      type="radio"
+                      name="timeGranularity"
+                      value="weekly"
+                      checked={timeGranularity === "weekly"}
+                      onChange={() => setTimeGranularity("weekly")}
+                    />
+                    Weekly
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="timeGranularity"
+                      value="monthly"
+                      checked={timeGranularity === "monthly"}
+                      onChange={() => setTimeGranularity("monthly")}
+                    />
+                    Monthly
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="timeGranularity"
+                      value="yearly"
+                      checked={timeGranularity === "yearly"}
+                      onChange={() => setTimeGranularity("yearly")}
+                    />
+                    Yearly
+                  </label>
+                </div>
+              </div>
+
+              {/* Donor Metrics */}
+              <div className="metric-category">
+                <h3>Donor Metrics</h3>
+                <div className="checkbox-group">
+                  <label>
+                    <input
+                      type="checkbox"
+                      onChange={() => handleCheckboxChange("donorTypeChart")}
+                      checked={selectedOptions.includes("donorTypeChart")}
+                    />
+                    Donor Type: New vs Returning
+                  </label>
+                </div>
+                <div className="checkbox-group">
+                  <label>
+                    <input
+                      type="checkbox"
+                      onChange={() =>
+                        handleCheckboxChange("donationsByDonorType")
+                      }
+                      checked={selectedOptions.includes("donationsByDonorType")}
+                    />
+                    Total Donations by Donor Type
+                  </label>
+                </div>
+                <div className="checkbox-group">
+                  <label>
+                    <input
+                      type="checkbox"
+                      onChange={() => handleCheckboxChange("retentionRate")}
+                      checked={selectedOptions.includes("retentionRate")}
+                    />
+                    Donor Retention Rate
+                  </label>
+                </div>
+              </div>
+
+              {/* Campaign Metrics */}
+              <div className="metric-category">
+                <h3>Campaign Metrics</h3>
+                <div className="checkbox-group">
+                  <label>
+                    <input
+                      type="checkbox"
+                      onChange={() =>
+                        handleCheckboxChange("donationPerCampaign")
+                      }
+                      checked={selectedOptions.includes("donationPerCampaign")}
+                    />
+                    Total Donation per Campaign
+                  </label>
+                </div>
+                <div className="checkbox-group">
+                  <label>
+                    <input
+                      type="checkbox"
+                      onChange={() => handleCheckboxChange("goalProgress")}
+                      checked={selectedOptions.includes("goalProgress")}
+                    />
+                    Fundraising Goal Progress
+                  </label>
+                </div>
+              </div>
             </div>
           )}
-         </div> 
-
-        {showSidebar && (
-          <div className="sidebar">
-            <h2>Customize Charts</h2>
-
-            {/* General Metrics */}
-            <div className="metric-category">
-              <h3>General Metrics</h3>
-              <div className="checkbox-group">
-                <label>
-                  <input
-                    type="checkbox"
-                    onChange={() => handleCheckboxChange('totalDonations')}
-                    checked={selectedOptions.includes('totalDonations')}
-                  />
-                  Total Donations
-                </label>
-              </div>
-              <div className="checkbox-group">
-                <label>
-                  <input
-                    type="checkbox"
-                    onChange={() => handleCheckboxChange('totalDonors')}
-                    checked={selectedOptions.includes('totalDonors')}
-                  />
-                  Total Donors
-                </label>
-              </div>
-              <div className="checkbox-group">
-                <label>
-                  <input
-                    type="checkbox"
-                    onChange={() => handleCheckboxChange('averageDonation')}
-                    checked={selectedOptions.includes('averageDonation')}
-                  />
-                  Average Donation Amount
-                </label>
-              </div>
-            </div>
-
-            {/* Time-based Metrics */}
-            <div className="metric-category">
-              <h3>Time-based Metrics</h3>
-              <div className="checkbox-group">
-                <label>
-                  <input
-                    type="checkbox"
-                    onChange={() => handleCheckboxChange('donationByTime')}
-                    checked={selectedOptions.includes('donationByTime')}
-                  />
-                  Total Donation by Time
-                </label>
-              </div>
-              <div className="checkbox-group nested-group">
-                <label>
-                  <input
-                    type="radio"
-                    name="timeGranularity"
-                    value="weekly"
-                    checked={timeGranularity === 'weekly'}
-                    onChange={() => setTimeGranularity('weekly')}
-                  />
-                  Weekly
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="timeGranularity"
-                    value="monthly"
-                    checked={timeGranularity === 'monthly'}
-                    onChange={() => setTimeGranularity('monthly')}
-                  />
-                  Monthly
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="timeGranularity"
-                    value="yearly"
-                    checked={timeGranularity === 'yearly'}
-                    onChange={() => setTimeGranularity('yearly')}
-                  />
-                  Yearly
-                </label>
-              </div>
-            </div>
-
-            {/* Donor Metrics */}
-            <div className="metric-category">
-              <h3>Donor Metrics</h3>
-              <div className="checkbox-group">
-                <label>
-                  <input
-                    type="checkbox"
-                    onChange={() => handleCheckboxChange('donorTypeChart')}
-                    checked={selectedOptions.includes('donorTypeChart')}
-                  />
-                  Donor Type: New vs Returning
-                </label>
-              </div>
-              <div className="checkbox-group">
-                <label>
-                  <input
-                    type="checkbox"
-                    onChange={() => handleCheckboxChange('donationsByDonorType')}
-                    checked={selectedOptions.includes('donationsByDonorType')}
-                  />
-                  Total Donations by Donor Type
-                </label>
-              </div>
-              <div className="checkbox-group">
-                <label>
-                  <input
-                    type="checkbox"
-                    onChange={() => handleCheckboxChange('retentionRate')}
-                    checked={selectedOptions.includes('retentionRate')}
-                  />
-                  Donor Retention Rate
-                </label>
-              </div>
-            </div>
-
-            {/* Campaign Metrics */}
-            <div className="metric-category">
-              <h3>Campaign Metrics</h3>
-              <div className="checkbox-group">
-                <label>
-                  <input
-                    type="checkbox"
-                    onChange={() => handleCheckboxChange('donationPerCampaign')}
-                    checked={selectedOptions.includes('donationPerCampaign')}
-                  />
-                  Total Donation per Campaign
-                </label>
-              </div>
-              <div className="checkbox-group">
-                <label>
-                  <input
-                    type="checkbox"
-                    onChange={() => handleCheckboxChange('goalProgress')}
-                    checked={selectedOptions.includes('goalProgress')}
-                  />
-                  Fundraising Goal Progress
-                </label>
-              </div>
-            </div>
-          </div>
-        )}
+        </div>
       </div>
     </div>
   );
