@@ -145,7 +145,11 @@ export default function Dashboard2({
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" stroke="#fff" />
-          <YAxis stroke="#fff" width={80} />
+          <YAxis
+            stroke="#fff"
+            width={80}
+            tickFormatter={(val) => val.toLocaleString()}
+          />
           <Tooltip formatter={(val) => `$${val.toLocaleString()}`} />
           <Line type="monotone" dataKey="value" stroke="#00C49F" />
         </LineChart>
