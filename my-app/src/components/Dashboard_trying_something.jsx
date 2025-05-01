@@ -98,124 +98,54 @@ export default function Dashboard2({
 
   const { financials, expenses_breakdown: breakdown } = data;
 
-  const handleCheckboxChange = (value) => {
+  const handleCheckboxChange = (option) => {
     setSelectedOptions((prev) =>
-      prev.includes(value)
-        ? prev.filter((v) => v !== value)
-        : [...prev, value]
+      prev.includes(option)
+        ? prev.filter((opt) => opt !== option)
+        : [...prev, option]
     );
   };
 
   const smallMetrics = [
-      { key: "totalDonations", label: "Total Donations" },
-      { key: "totalDonors", label: "Total Donors" },
-      { key: "averageDonation", label: "Average Donation" },
-      { key: "retentionRate", label: "Donor Retention Rate" },
-      { key: "goalProgress", label: "Goal Progress" },
-      { key: "total_revenue", label: "Total Revenue" },
-      { key: "total_expenses", label: "Total Expenses" },
-      { key: "net_investment_income", label: "Net Investment Income" },
-      {
-        key: "disbursements_for_charitable_purposes",
-        label: "Charitable Disbursements",
-      },
-      {
-        key: "contributions_gifts_grants_received",
-        label: "Gifts/Grants Received",
-      },
-    ];
-  
+    { key: "total_revenue", label: "Total Revenue" },
+    { key: "total_expenses", label: "Total Expenses" },
+    { key: "net_investment_income", label: "Net Investment Income" },
+    {
+      key: "disbursements_for_charitable_purposes",
+      label: "Charitable Disbursements",
+    },
+    {
+      key: "contributions_gifts_grants_received",
+      label: "Gifts/Grants Received",
+    },
+  ];
 
   const assetKeys = [
     { key: "net_assets_or_fund_balances", label: "Net Assets/Fund Balances" },
     { key: "total_assets", label: "Total Assets" },
     { key: "liabilities", label: "Liabilities" },
-    { key: "donorTypeChart", label: "Donor Type Chart" },
-    { key: "donationByTime", label: "Donations Over Time" },
-    { key: "donationsByDonorType", label: "Donations by Donor Type" },
-    { key: "donationPerCampaign", label: "Donations per Campaign" },
   ];
 
-  const donationInsightsMetrics = [
+  const donationMetrics = [
     { key: "totalDonations", label: "Total Donations" },
     { key: "totalDonors", label: "Total Donors" },
     { key: "averageDonation", label: "Average Donation" },
-    { key: "retentionRate", label: "Donor Retention Rate" },
-    { key: "goalProgress", label: "Goal Progress" },
     { key: "donorTypeChart", label: "Donor Type Chart" },
     { key: "donationByTime", label: "Donations Over Time" },
     { key: "donationsByDonorType", label: "Donations by Donor Type" },
+    { key: "retentionRate", label: "Donor Retention Rate" },
     { key: "donationPerCampaign", label: "Donations per Campaign" },
+    { key: "goalProgress", label: "Goal Progress" },
   ];
 
-  const ngoInsightsMetrics = [
-    ...smallMetrics,
-    ...assetKeys,
-    { key: "expenses_breakdown", label: "Expense Breakdown" }
-  ].filter((m) => !donationInsightsMetrics.find((d) => d.key === m.key));
-  
-
-  const renderSmallMetric = (key, label) => {
-
-    if (key === "totalDonations") {
-      return (
-        <div className="small-metric-card">
-          <div className="metric-value">$100</div>
-          <div className="metric-label">Total Donations</div>
-        </div>
-      );
-    }
-
-    if (key === "totalDonors") {
-      return (
-        <div className="small-metric-card">
-          <div className="metric-value">10</div>
-          <div className="metric-label">Total Donors</div>
-        </div>
-      );
-    }
-
-    if (key === "averageDonation") {
-      return (
-        <div className="small-metric-card">
-          <div className="metric-value">$10</div>
-          <div className="metric-label">Average Donation</div>
-        </div>
-      );
-    }
-
-    
-    if (key === "goalProgress") {
-      return (
-        <div className="small-metric-card" key={key}>
-          <label>{label}</label>
-          <div className="progress-bar">
-            <div className="progress-fill" style={{ width: "50%" }}></div>
-          </div>
-          <div className="progress-label">50%</div>
-        </div>
-      );
-    }
-  
-    if (key === "retentionRate") {
-      return (
-        <div className="small-metric-card" key={key}>
-          <div className="metric-value">30%</div>
-          <div className="metric-label">{label}</div>
-        </div>
-      );
-    }
-  
-    return (
-      <div className="small-metric-card" key={key}>
-        <div className="metric-value">
-          ${financials[key] ? financials[key].toLocaleString() : "-"}
-        </div>
-        <div className="metric-label">{label}</div>
+  const renderSmallMetric = (key, label) => (
+    <div className="small-metric-card" key={key}>
+      <div className="metric-value">
+        ${financials[key] ? financials[key].toLocaleString() : "-"}
       </div>
-    );
-  };
-  
+      <div className="metric-label">{label}</div>
+    </div>
+  );
 
   const renderLineChart = (key, label) => (
     <div className="chart-card" key={key}>
@@ -261,7 +191,33 @@ export default function Dashboard2({
   };
 
   const renderChart = (option) => {
-    
+    if (option === "totalDonations") {
+      return (
+        <div className="small-metric-card">
+          <div className="metric-value">$100</div>
+          <div className="metric-label">Total Donations</div>
+        </div>
+      );
+    }
+
+    if (option === "totalDonors") {
+      return (
+        <div className="small-metric-card">
+          <div className="metric-value">10</div>
+          <div className="metric-label">Total Donors</div>
+        </div>
+      );
+    }
+
+    if (option === "averageDonation") {
+      return (
+        <div className="small-metric-card">
+          <div className="metric-value">$10</div>
+          <div className="metric-label">Average Donation</div>
+        </div>
+      );
+    }
+
     if (option === "donationByTime") {
       let data = [];
       let xKey = "";
@@ -296,33 +252,16 @@ export default function Dashboard2({
       }
 
       return (
-        <div>
-          <div className="time-toggle">
-            {["weekly", "monthly", "yearly"].map((granularity) => (
-              <button
-                key={granularity}
-                onClick={() => setTimeGranularity(granularity)}
-                className={`time-button ${
-                  timeGranularity === granularity ? "active" : ""
-                }`}
-              >
-                {granularity.charAt(0).toUpperCase() + granularity.slice(1)}
-              </button>
-            ))}
-          </div>
-          <div className="chart-card"> 
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={data}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey={xKey} stroke="#fff" />
-              <YAxis stroke="#fff" />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="value" stroke="#00C49F" />
-            </LineChart>
-          </ResponsiveContainer>
-          </div>
-        </div>
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart data={data}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey={xKey} stroke="#fff" />
+            <YAxis stroke="#fff" />
+            <Tooltip />
+            <Legend />
+            <Line type="monotone" dataKey="value" stroke="#00C49F" />
+          </LineChart>
+        </ResponsiveContainer>
       );
     }
 
@@ -333,7 +272,6 @@ export default function Dashboard2({
       ];
 
       return (
-        <div className="chart-card"> 
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={data} layout="vertical">
             <CartesianGrid strokeDasharray="3 3" />
@@ -344,7 +282,6 @@ export default function Dashboard2({
             <Bar dataKey="amount" fill="#8884d8" />
           </BarChart>
         </ResponsiveContainer>
-        </div>
       );
     }
 
@@ -355,7 +292,6 @@ export default function Dashboard2({
       ];
 
       return (
-        <div className="chart-card"> 
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={data}>
             <CartesianGrid strokeDasharray="3 3" />
@@ -366,6 +302,14 @@ export default function Dashboard2({
             <Bar dataKey="donations" fill="#00C49F" />
           </BarChart>
         </ResponsiveContainer>
+      );
+    }
+
+    if (option === "retentionRate") {
+      return (
+        <div className="small-metric-card">
+          <div className="metric-value">30%</div>
+          <div className="metric-label">Donor Retention Rate</div>
         </div>
       );
     }
@@ -378,7 +322,6 @@ export default function Dashboard2({
       ];
 
       return (
-        <div className="chart-card"> 
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={data}>
             <CartesianGrid strokeDasharray="3 3" />
@@ -389,29 +332,23 @@ export default function Dashboard2({
             <Bar dataKey="value" fill="#FF8042" />
           </BarChart>
         </ResponsiveContainer>
+      );
+    }
+
+    if (option === "goalProgress") {
+      return (
+        <div className="progress-container">
+          <label>Fundraising Goal Progress</label>
+          <div className="progress-bar">
+            <div className="progress-fill" style={{ width: "50%" }}></div>
+          </div>
+          <div className="progress-label">50%</div>
         </div>
       );
     }
 
     return null;
   };
-
-  const handleBulkSelect = (keys) => {
-    setSelectedOptions((prev) => {
-      const newSelection = [...prev];
-      keys.forEach((key) => {
-        const index = newSelection.indexOf(key);
-        if (index !== -1) newSelection.splice(index, 1); // remove old position
-        newSelection.push(key); // add to end (top of display)
-      });
-      return [...new Set(newSelection)];
-    });
-  };
-  
-  const handleBulkDeselect = (keys) => {
-    setSelectedOptions((prev) => prev.filter((key) => !keys.includes(key)));
-  };
-  
 
 
   return (
@@ -422,69 +359,46 @@ export default function Dashboard2({
             {showSidebar ? "Hide Customization" : "Show Customization"}
           </button>
         </div>
-  
+
         <div className="dashboard-content-area">
           <div className="main-content">
             <div className="small-metrics-container">
-              {selectedOptions
-                .filter((key) => smallMetrics.some((m) => m.key === key))
-                .map((key) => {
-                  const metric = smallMetrics.find((m) => m.key === key);
-                  return renderSmallMetric(metric.key, metric.label);
-                })}
+              {[...smallMetrics, ...donationMetrics.slice(0, 4)]
+                .filter((m) => selectedOptions.includes(m.key))
+                .map((m) => renderSmallMetric(m.key, m.label))}
             </div>
 
-            <div className="large-metrics-container">
+            <div className="chart-wrapper">
+              {assetKeys
+                .filter((m) => selectedOptions.includes(m.key))
+                .map((m) => renderLineChart(m.key, m.label))}
+              {selectedOptions.includes("expenses_breakdown") && renderExpensesBar()}
+            </div>
+
+            <div className="chart-wrapper grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {selectedOptions
-                .filter((key) => !smallMetrics.some((m) => m.key === key))
-                .map((key) => {
-                  const metric =
-                    [...donationInsightsMetrics, ...ngoInsightsMetrics].find((m) => m.key === key);
-
-                  
-                  if (!metric) return null;
-
-                  if (["donationByTime", "donorTypeChart", "donationsByDonorType", "donationPerCampaign"].includes(key)) {
-                    return renderChart(metric.key, metric.label);
-                  } else if (key === "expenses_breakdown") {
-                    return renderExpensesBar();
-                  } else {
-                    return renderLineChart(metric.key, metric.label);
-                  }
-                })}
+                .filter((option) =>
+                  donationMetrics.map((m) => m.key).includes(option) &&
+                  !["totalDonations", "totalDonors", "averageDonation", "donorTypeChart"].includes(option)
+                )
+                .map((option) => (
+                  <div key={option} className="chart-card">
+                    {renderChart(option)}
+                  </div>
+                ))}
             </div>
           </div>
-  
+
           {showSidebar && (
             <div className="sidebar">
               <h2>Customize Charts</h2>
-  
               <div className="dropdown-section">
                 <h3 onClick={() => setDonationDropdownOpen(!donationDropdownOpen)}>
                   Donation Insights {donationDropdownOpen ? "▲" : "▼"}
                 </h3>
-
                 {donationDropdownOpen && (
                   <>
-                    <div className="checkbox-group">
-                      <label>
-                        <input
-                          type="checkbox"
-                          checked={donationInsightsMetrics.every((m) => selectedOptions.includes(m.key))}
-                          onChange={(e) => {
-                            const allKeys = donationInsightsMetrics.map((m) => m.key);
-                            if (e.target.checked) {
-                              handleBulkSelect(allKeys); // adds in order
-                            } else {
-                              handleBulkDeselect(allKeys);
-                            }
-                          }}
-                        />
-                        Select All
-                      </label>
-                    </div>
-
-                    {donationInsightsMetrics.map((metric) => (
+                    {donationMetrics.map((metric) => (
                       <div className="checkbox-group" key={metric.key}>
                         <label>
                           <input
@@ -500,39 +414,13 @@ export default function Dashboard2({
                 )}
               </div>
 
-            
-  
               <div className="dropdown-section">
-                <h3 onClick={() => {
-                  const newVal = !ngoDropdownOpen;
-                  setNGoDropdownOpen(newVal);
-                  localStorage.setItem("ngoDropdownOpen", JSON.stringify(newVal));
-                }}>
+                <h3 onClick={() => setNGoDropdownOpen(!ngoDropdownOpen)}>
                   NGO Insights {ngoDropdownOpen ? "▲" : "▼"}
                 </h3>
                 {ngoDropdownOpen && (
                   <>
-  
-
-                    <div className="checkbox-group">
-                      <label>
-                        <input
-                          type="checkbox"
-                          checked={ngoInsightsMetrics.every((m) => selectedOptions.includes(m.key))}
-                          onChange={(e) => {
-                            const allKeys = ngoInsightsMetrics.map((m) => m.key);
-                            if (e.target.checked) {
-                              handleBulkSelect(allKeys); // adds in order
-                            } else {
-                              handleBulkDeselect(allKeys);
-                            }
-                          }}
-                        />
-                        Select All
-                      </label>
-                    </div>
-
-                  {ngoInsightsMetrics.map((metric) => (
+                    {smallMetrics.map((metric) => (
                       <div className="checkbox-group" key={metric.key}>
                         <label>
                           <input
@@ -545,6 +433,29 @@ export default function Dashboard2({
                       </div>
                     ))}
 
+                    {assetKeys.map((metric) => (
+                      <div className="checkbox-group" key={metric.key}>
+                        <label>
+                          <input
+                            type="checkbox"
+                            checked={selectedOptions.includes(metric.key)}
+                            onChange={() => handleCheckboxChange(metric.key)}
+                          />
+                          {metric.label}
+                        </label>
+                      </div>
+                    ))}
+
+                    <div className="checkbox-group">
+                      <label>
+                        <input
+                          type="checkbox"
+                          checked={selectedOptions.includes("expenses_breakdown")}
+                          onChange={() => handleCheckboxChange("expenses_breakdown")}
+                        />
+                        Expense Breakdown
+                      </label>
+                    </div>
                   </>
                 )}
               </div>
@@ -554,5 +465,4 @@ export default function Dashboard2({
       </div>
     </div>
   );
-  
 }
