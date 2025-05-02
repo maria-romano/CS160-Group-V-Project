@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Upload, FileText, FileCode, AlertCircle, Check } from "lucide-react";
-import { extractTextFromPDF, parseForm990Text } from "../utils/pdfUtils";
+import { convertPDFToImage } from "../utils/pdfUtils";
+import {
+  fetchAndParseReagentData,
+  getFallbackData,
+} from "../utils/fetchReagentData";
 import "./Form990Upload.css";
 
 export default function Form990Upload({ onComplete }) {
@@ -10,6 +14,7 @@ export default function Form990Upload({ onComplete }) {
   const [error, setError] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadStatus, setUploadStatus] = useState(null);
+  const [previewImage, setPreviewImage] = useState(null);
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -26,6 +31,23 @@ export default function Form990Upload({ onComplete }) {
 
     setFile(selectedFile);
     setError(null);
+
+    // Generate preview
+    generatePreview(selectedFile);
+  };
+
+  const generatePreview = async (file) => {
+    try {
+      const fileContent = await readFileAsArrayBuffer(file);
+      const base64Image = await convertPDFToImage(fileContent);
+      setPreviewImage(`data:image/png;base64,${base64Image}`);
+    } catch (error) {
+      console.error("Preview generation error:", error);
+      // Continue without preview but show a message
+      setError(
+        "Could not generate preview, but you can still upload the file."
+      );
+    }
   };
 
   const handleUpload = async () => {
@@ -39,39 +61,68 @@ export default function Form990Upload({ onComplete }) {
       // Read the file content
       const fileContent = await readFileAsArrayBuffer(file);
 
-      // Store the raw PDF data for later use
-      const rawPdfData = await readFileAsBinaryString(file);
-      localStorage.setItem("form990RawData", rawPdfData);
+      // Store the file name
       localStorage.setItem("form990FileName", file.name);
 
-      // Extract text from PDF
-      setUploadStatus("Extracting data from PDF...");
-      let extractedText = "";
+      // Convert PDF to image
+      setUploadStatus("Converting PDF to image...");
+      let base64Image;
       try {
-        extractedText = await extractTextFromPDF(fileContent);
+        base64Image = await convertPDFToImage(fileContent);
       } catch (pdfError) {
-        console.error("PDF extraction error:", pdfError);
-        // Continue with the process even if text extraction fails
-        extractedText = "PDF text extraction failed";
+        console.error("PDF conversion error:", pdfError);
+        setUploadStatus("PDF conversion failed, using fallback data...");
+        // Use fallback data if PDF conversion fails
+        const fallbackData = getFallbackData();
+        localStorage.setItem(
+          "form990StructuredData",
+          JSON.stringify(fallbackData)
+        );
+        if (onComplete) {
+          onComplete(fallbackData);
+        }
+
+        // Success message and navigation
+        setUploadStatus("Success! Preparing your dashboard...");
+        setTimeout(() => {
+          navigate("/dashboard");
+        }, 1500);
+        return;
       }
 
-      // Parse the extracted text into structured data if possible
-      setUploadStatus("Parsing form data...");
+      // Send to Reagent API
+      setUploadStatus("Analyzing form data...");
       let structuredData = null;
-      if (extractedText && extractedText.length > 100) {
-        structuredData = parseForm990Text(extractedText);
+      try {
+        structuredData = await fetchAndParseReagentData(base64Image);
+        console.log("Reagent API response:", structuredData); // Log the response
+      } catch (apiError) {
+        console.error("Reagent API error:", apiError);
+        // Use fallback data if API fails
+        structuredData = getFallbackData();
       }
 
-      // Store the structured data if we have it
+      // Store the structured data
       if (structuredData) {
+        localStorage.setItem(
+          "form990StructuredData",
+          JSON.stringify(structuredData)
+        );
+      } else {
+        // Use fallback data if we didn't get a response
+        structuredData = getFallbackData();
         localStorage.setItem(
           "form990StructuredData",
           JSON.stringify(structuredData)
         );
       }
 
-      // Even if PDF extraction fails, we can still navigate to the dashboard
-      // and use fallback data
+      // Call onComplete with the data
+      if (onComplete) {
+        onComplete(structuredData);
+      }
+
+      // Success message and navigation
       setUploadStatus("Success! Preparing your dashboard...");
       setTimeout(() => {
         navigate("/dashboard");
@@ -92,18 +143,13 @@ export default function Form990Upload({ onComplete }) {
     });
   };
 
-  const readFileAsBinaryString = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = (event) => resolve(event.target.result);
-      reader.onerror = (error) => reject(error);
-      reader.readAsBinaryString(file);
-    });
-  };
-
   const skipUpload = () => {
+    // Use fallback data when skipping
+    const fallbackData = getFallbackData();
+    localStorage.setItem("form990StructuredData", JSON.stringify(fallbackData));
+
     if (onComplete) {
-      onComplete(null);
+      onComplete(fallbackData);
     }
     navigate("/dashboard");
   };
@@ -136,9 +182,19 @@ export default function Form990Upload({ onComplete }) {
                 className="file-input"
               />
               <label htmlFor="form990-upload" className="upload-label">
-                <div className="upload-icon-container">
-                  <Upload size={40} />
-                </div>
+                {previewImage ? (
+                  <div className="preview-container">
+                    <img
+                      src={previewImage}
+                      alt="PDF Preview"
+                      className="pdf-preview"
+                    />
+                  </div>
+                ) : (
+                  <div className="upload-icon-container">
+                    <Upload size={40} />
+                  </div>
+                )}
                 <span className="upload-text">
                   {file ? file.name : "Drag and drop or click to upload"}
                 </span>

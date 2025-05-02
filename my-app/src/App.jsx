@@ -1,5 +1,5 @@
 // src/App.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -29,6 +29,18 @@ function AppRoutes() {
   const [showSidebar, setShowSidebar] = useState(true);
   const [timeGranularity, setTimeGranularity] = useState("monthly");
   const [form990Data, setForm990Data] = useState(null);
+
+  useEffect(() => {
+    // Load form990Data from localStorage on initial render
+    const storedData = localStorage.getItem("form990StructuredData");
+    if (storedData) {
+      try {
+        setForm990Data(JSON.parse(storedData));
+      } catch (err) {
+        console.error("Error parsing stored form990Data:", err);
+      }
+    }
+  }, []);
 
   const handleAuth = () => {
     setIsAuthenticated(true);
@@ -77,7 +89,14 @@ function AppRoutes() {
 
         <Route
           path="/form990-upload"
-          element={<Form990Upload onComplete={handleForm990Upload} />}
+          element={
+            <Form990Upload
+              onComplete={(data) => {
+                setForm990Data(data);
+                navigate("/dashboard");
+              }}
+            />
+          }
         />
 
         <Route
