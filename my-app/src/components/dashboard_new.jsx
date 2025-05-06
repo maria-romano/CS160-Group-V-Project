@@ -15,53 +15,50 @@ import {
 import { fetchAndParseReagentData } from "../utils/fetchReagentData";
 
 const fallbackData = {
-  organization_info: {
-    foundation_name: "The Rockefeller Foundation",
-    EIN: "13-1659629",
-    tax_year: "2020",
+  organization_info : {
+    foundation_name: "SEACOLOGY",
+    EIN: "87-0495235",
+    tax_year: "2022",
     address: {
-      street: "420 Fifth Avenue",
-      city: "New York",
-      state: "NY",
-      ZIP: "10018-2702",
+      street: "1623 SOLANO AVENUE",
+      city: "BERKELEY",
+      state: "CA",
+      ZIP: "94707"
     },
-    telephone: "(212) 852-8361",
+    telephone: "(510) 559-3505",
+    website: "WWW.SEACOLOGY.ORG",
+    principal_officer: {
+      name: "DUANE SILVERSTEIN",
+      address: "1623 SOLANO AVENUE, BERKELEY, CA 94707"
+    },
+    year_of_formation: 1991,
+    state_of_legal_domicile: "CA"
   },
   financials: {
-    total_revenue: 356063644,
-    total_expenses: 285600759,
-    net_investment_income: 72587310,
-    disbursements_for_charitable_purposes: 268539317,
-    contributions_gifts_grants_received: 11539,
-    net_assets_or_fund_balances: {
-      beginning_of_year: 4795538000,
-      end_of_year: 6281040714,
-    },
+    total_revenue: 3256392,
+    total_expenses: 2820441,
+    net_investment_income: 296036,
+    disbursements_for_charitable_purposes: 982256, 
     total_assets: {
-      beginning_of_year: 4929907452,
-      end_of_year: 7117904789,
+      beginning_of_year: 10971501,
+      end_of_year: 10148588
     },
     liabilities: {
-      beginning_of_year: 134369452,
-      end_of_year: 836864075,
+      beginning_of_year: 143166,
+      end_of_year: 427195
     },
+    net_assets_or_fund_balances: {
+      beginning_of_year: 10828335,
+      end_of_year: 9721933
+    }
   },
   expenses_breakdown: {
-    compensation_of_officers_directors: 4119227,
-    other_employee_salaries_and_wages: 33798097,
-    pension_plans_employee_benefits: 10848559,
-    legal_fees: 3005616,
-    accounting_fees: 529420,
-    other_professional_fees: 37310910,
-    interest: 332901,
-    taxes: 653416,
-    depreciation: 2790352,
-    occupancy: 3282507,
-    travel_conferences_meetings: 2010511,
-    printing_and_publications: 367586,
-    other_expenses: 11322353,
-    contributions_gifts_grants_paid: 175229304,
-  },
+    contributions_gifts_grants_paid: 982256,
+    salaries: 1181958,
+    professional_fundraising_fees: 0,
+    other_expenses: 656227,
+    total_functional_expenses: 3824427
+  }
 };
 
 // Add this function to normalize data format
@@ -249,7 +246,7 @@ export default function Dashboard2({
     if (key === "totalDonations") {
       return (
         <div className="small-metric-card" key={key}>
-          <div className="metric-value">$100</div>
+          <div className="metric-value">$500,000</div>
           <div className="metric-label">Total Donations</div>
         </div>
       );
@@ -258,7 +255,7 @@ export default function Dashboard2({
     if (key === "totalDonors") {
       return (
         <div className="small-metric-card" key={key}>
-          <div className="metric-value">10</div>
+          <div className="metric-value">48</div>
           <div className="metric-label">Total Donors</div>
         </div>
       );
@@ -267,7 +264,7 @@ export default function Dashboard2({
     if (key === "averageDonation") {
       return (
         <div className="small-metric-card" key={key}>
-          <div className="metric-value">$10</div>
+          <div className="metric-value">$10,410</div>
           <div className="metric-label">Average Donation</div>
         </div>
       );
@@ -313,19 +310,16 @@ export default function Dashboard2({
             { name: "Start", value: financials[key]?.beginning_of_year || 0 },
             { name: "End", value: financials[key]?.end_of_year || 0 },
           ]}
-          margin={{ top: 10, right: 30, left: 0, bottom: 10 }} // ← extra left margin
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" stroke="#fff" />
-          <YAxis stroke="#fff" width={100} /> {/* ← wider Y-axis */}
+          <YAxis stroke="#fff" />
           <Tooltip formatter={(val) => `$${val.toLocaleString()}`} />
-          <Line type="monotone" dataKey="value" stroke="#00C49F" dot />
+          <Line type="monotone" dataKey="value" stroke="#00C49F" />
         </LineChart>
       </ResponsiveContainer>
     </div>
   );
-  
-  
 
   const renderExpensesBar = () => {
     const formatted = Object.entries(breakdown).map(([label, value]) => ({
@@ -333,25 +327,21 @@ export default function Dashboard2({
       value,
     }));
     const total = formatted.reduce((sum, d) => sum + d.value, 0);
-  
+
     return (
       <div className="chart-card">
         <h3>Total Expenses: ${total.toLocaleString()}</h3>
-        <ResponsiveContainer width="100%" height={450}>
-          <BarChart
-            data={formatted}
-            margin={{ top: 10, right: 30, left: 100, bottom: 120 }} // ← ample bottom for angled X labels
-          >
+        <ResponsiveContainer width="100%" height={400}>
+          <BarChart data={formatted}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis
               dataKey="label"
               stroke="#fff"
               angle={-45}
               textAnchor="end"
-              interval={0}
-              height={120}
+              height={100}
             />
-            <YAxis stroke="#fff" width={100} /> {/* ← fix Y-axis clipping */}
+            <YAxis stroke="#fff" />
             <Tooltip formatter={(value) => [`$${value.toLocaleString()}`]} />
             <Bar dataKey="value" fill="#FF8042" />
           </BarChart>
@@ -359,8 +349,6 @@ export default function Dashboard2({
       </div>
     );
   };
-  
-  
 
   const renderChart = (option) => {
     if (option === "donationByTime") {
@@ -370,25 +358,25 @@ export default function Dashboard2({
       switch (timeGranularity) {
         case "weekly":
           data = [
-            { week: "Week 1", value: 100 },
-            { week: "Week 2", value: 150 },
-            { week: "Week 3", value: 200 },
+            { week: "Week 1", value: 200000 },
+            { week: "Week 2", value: 210000 },
+            { week: "Week 3", value: 220000 },
           ];
           xKey = "week";
           break;
         case "monthly":
           data = [
-            { month: "Jan", value: 300 },
-            { month: "Feb", value: 400 },
-            { month: "Mar", value: 250 },
+            { month: "Jan", value: 200000 },
+            { month: "Feb", value: 250000 },
+            { month: "Mar", value: 300000 },
           ];
           xKey = "month";
           break;
         case "yearly":
           data = [
-            { year: "2022", value: 1200 },
-            { year: "2023", value: 1500 },
-            { year: "2024", value: 1300 },
+            { year: "2022", value: 100000 },
+            { year: "2023", value: 150000 },
+            { year: "2024", value: 500000 },
           ];
           xKey = "year";
           break;
@@ -416,7 +404,7 @@ export default function Dashboard2({
               <LineChart data={data}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey={xKey} stroke="#fff" />
-                <YAxis stroke="#fff" tickFormatter={(value) => `$${value.toLocaleString()}`} />
+                <YAxis stroke="#fff" />
                 <Tooltip />
                 <Legend />
                 <Line type="monotone" dataKey="value" stroke="#00C49F" />
@@ -429,21 +417,17 @@ export default function Dashboard2({
 
     if (option === "donorTypeChart") {
       const data = [
-        { type: "New", amount: 60 },
-        { type: "Returning", amount: 40 },
+        { type: "New", amount: 20 },
+        { type: "Returning", amount: 28 },
       ];
 
       return (
         <div className="chart-card">
           <ResponsiveContainer width="100%" height={300}>
-            <BarChart
-              data={data}
-              layout="vertical"
-              margin={{ top: 10, right: 30, left: 0, bottom: 10 }} // ← ADDED LEFT MARGIN
-            >
+            <BarChart data={data} layout="vertical">
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis type="number" stroke="#fff" />
-              <YAxis dataKey="type" type="category" stroke="#fff" width={120} /> {/* ← FIXED WIDTH */}
+              <YAxis dataKey="type" type="category" stroke="#fff" />
               <Tooltip />
               <Legend />
               <Bar dataKey="amount" fill="#8884d8" />
@@ -455,8 +439,8 @@ export default function Dashboard2({
 
     if (option === "donationsByDonorType") {
       const data = [
-        { group: "New Donors", donations: 800 },
-        { group: "Returning Donors", donations: 1200 },
+        { group: "New Donors", donations: 20 },
+        { group: "Returning Donors", donations: 28 },
       ];
 
       return (
@@ -465,7 +449,7 @@ export default function Dashboard2({
             <BarChart data={data}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="group" stroke="#fff" />
-              <YAxis stroke="#fff" tickFormatter={(value) => `$${value.toLocaleString()}`} />
+              <YAxis stroke="#fff" />
               <Tooltip />
               <Legend />
               <Bar dataKey="donations" fill="#00C49F" />
@@ -488,7 +472,7 @@ export default function Dashboard2({
             <BarChart data={data}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="campaign" stroke="#fff" />
-              <YAxis stroke="#fff" tickFormatter={(value) => `$${value.toLocaleString()}`} />
+              <YAxis stroke="#fff" />
               <Tooltip />
               <Legend />
               <Bar dataKey="value" fill="#FF8042" />
@@ -574,11 +558,13 @@ export default function Dashboard2({
               <h2>Customize Charts</h2>
 
               <div className="dropdown-section">
-                <h3
-                  onClick={() => setDonationDropdownOpen(!donationDropdownOpen)}
-                >
+              <h3 onClick={() => setDonationDropdownOpen(!donationDropdownOpen)}>
+                  <span className="tooltip-wrapper">
+                    ❓
+                    <span className="tooltip-text">Insights from real time donations done through DonorLoop</span>
+                  </span>
                   Donation Insights {donationDropdownOpen ? "▲" : "▼"}
-                </h3>
+              </h3>
 
                 {donationDropdownOpen && (
                   <>
@@ -621,18 +607,18 @@ export default function Dashboard2({
               </div>
 
               <div className="dropdown-section">
-                <h3
-                  onClick={() => {
-                    const newVal = !ngoDropdownOpen;
-                    setNGoDropdownOpen(newVal);
-                    localStorage.setItem(
-                      "ngoDropdownOpen",
-                      JSON.stringify(newVal)
-                    );
-                  }}
-                >
-                  NGO Insights {ngoDropdownOpen ? "▲" : "▼"}
-                </h3>
+              <h3 onClick={() => {
+                const newVal = !ngoDropdownOpen;
+                setNGoDropdownOpen(newVal);
+                localStorage.setItem("ngoDropdownOpen", JSON.stringify(newVal));
+              }}>
+                <span className="tooltip-wrapper">
+                  ❓
+                  <span className="tooltip-text">Your information taken from IRS 990 forms</span>
+                </span>
+                NGO Insights {ngoDropdownOpen ? "▲" : "▼"}
+              </h3>
+              
                 {ngoDropdownOpen && (
                   <>
                     <div className="checkbox-group">
