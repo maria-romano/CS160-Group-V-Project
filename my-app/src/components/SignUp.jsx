@@ -92,9 +92,9 @@ function SignUp({ onSignUp }) {
 
           <div className="signin-link">
             Already have one?{" "}
-            <Link to="/signin" className="accent-link">
+            <a to="/signin" className="accent-link">
               Sign in here
-            </Link>
+            </a>
           </div>
 
           <form onSubmit={handleSubmit}>
@@ -174,9 +174,9 @@ function SignUp({ onSignUp }) {
             </div>
 
             <div className="terms-link">
-              <Link to="/terms" className="accent-link">
+              <a to="/terms" className="accent-link">
                 Read our Terms and Conditions
-              </Link>
+              </a>
             </div>
 
             <button type="submit" className="join-button">

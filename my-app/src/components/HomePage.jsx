@@ -33,9 +33,9 @@ function HomePage() {
           <Link to="/signup" className="cta-button primary">
             Get Started
           </Link>
-          <Link to="/signup" className="cta-button secondary">
+          <a to="/signup" className="cta-button secondary">
             Sign in
-          </Link>
+          </a>
         </div>
       </main>
     </div>
