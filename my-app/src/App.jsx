@@ -8,7 +8,6 @@ import {
   useLocation,
 } from "react-router-dom";
 import NavBar from "./components/NavBar";
-import Dashboard from "./components/Dashboard";
 import Dashboard2 from "./components/Dashboard2";
 import Profile from "./components/Profile";
 import CreatePost from "./components/CreatePost";
