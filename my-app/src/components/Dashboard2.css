@@ -116,6 +116,39 @@
   transition: transform 0.2s ease;
 }
 
+.tooltip-wrapper {
+  display: inline-block;
+  position: relative;
+  margin-right: 8px;
+  cursor: help;
+  color: #888;
+  font-weight: bold;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  width: 220px;
+  background-color: #333;
+  color: #fff;
+  text-align: left;
+  border-radius: 4px;
+  padding: 6px;
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  left: 25px;
+  font-size: 0.8rem;
+  line-height: 1.2;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.tooltip-wrapper:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+
 .small-metric-card:hover {
   transform: scale(1.03);
 }

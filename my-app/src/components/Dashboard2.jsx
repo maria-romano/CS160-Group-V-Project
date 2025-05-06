@@ -246,7 +246,7 @@ export default function Dashboard2({
     if (key === "totalDonations") {
       return (
         <div className="small-metric-card" key={key}>
-          <div className="metric-value">$100</div>
+          <div className="metric-value">$500,000</div>
           <div className="metric-label">Total Donations</div>
         </div>
       );
@@ -255,7 +255,7 @@ export default function Dashboard2({
     if (key === "totalDonors") {
       return (
         <div className="small-metric-card" key={key}>
-          <div className="metric-value">10</div>
+          <div className="metric-value">48</div>
           <div className="metric-label">Total Donors</div>
         </div>
       );
@@ -264,7 +264,7 @@ export default function Dashboard2({
     if (key === "averageDonation") {
       return (
         <div className="small-metric-card" key={key}>
-          <div className="metric-value">$10</div>
+          <div className="metric-value">$10,410</div>
           <div className="metric-label">Average Donation</div>
         </div>
       );
@@ -358,25 +358,25 @@ export default function Dashboard2({
       switch (timeGranularity) {
         case "weekly":
           data = [
-            { week: "Week 1", value: 100 },
-            { week: "Week 2", value: 150 },
-            { week: "Week 3", value: 200 },
+            { week: "Week 1", value: 200000 },
+            { week: "Week 2", value: 210000 },
+            { week: "Week 3", value: 220000 },
           ];
           xKey = "week";
           break;
         case "monthly":
           data = [
-            { month: "Jan", value: 300 },
-            { month: "Feb", value: 400 },
-            { month: "Mar", value: 250 },
+            { month: "Jan", value: 200000 },
+            { month: "Feb", value: 250000 },
+            { month: "Mar", value: 300000 },
           ];
           xKey = "month";
           break;
         case "yearly":
           data = [
-            { year: "2022", value: 1200 },
-            { year: "2023", value: 1500 },
-            { year: "2024", value: 1300 },
+            { year: "2022", value: 100000 },
+            { year: "2023", value: 150000 },
+            { year: "2024", value: 500000 },
           ];
           xKey = "year";
           break;
@@ -417,8 +417,8 @@ export default function Dashboard2({
 
     if (option === "donorTypeChart") {
       const data = [
-        { type: "New", amount: 60 },
-        { type: "Returning", amount: 40 },
+        { type: "New", amount: 20 },
+        { type: "Returning", amount: 28 },
       ];
 
       return (
@@ -439,8 +439,8 @@ export default function Dashboard2({
 
     if (option === "donationsByDonorType") {
       const data = [
-        { group: "New Donors", donations: 800 },
-        { group: "Returning Donors", donations: 1200 },
+        { group: "New Donors", donations: 20 },
+        { group: "Returning Donors", donations: 28 },
       ];
 
       return (
@@ -558,11 +558,13 @@ export default function Dashboard2({
               <h2>Customize Charts</h2>
 
               <div className="dropdown-section">
-                <h3
-                  onClick={() => setDonationDropdownOpen(!donationDropdownOpen)}
-                >
+              <h3 onClick={() => setDonationDropdownOpen(!donationDropdownOpen)}>
+                  <span className="tooltip-wrapper">
+                    ❓
+                    <span className="tooltip-text">Insights from real time donations done through DonorLoop</span>
+                  </span>
                   Donation Insights {donationDropdownOpen ? "▲" : "▼"}
-                </h3>
+              </h3>
 
                 {donationDropdownOpen && (
                   <>
@@ -605,18 +607,18 @@ export default function Dashboard2({
               </div>
 
               <div className="dropdown-section">
-                <h3
-                  onClick={() => {
-                    const newVal = !ngoDropdownOpen;
-                    setNGoDropdownOpen(newVal);
-                    localStorage.setItem(
-                      "ngoDropdownOpen",
-                      JSON.stringify(newVal)
-                    );
-                  }}
-                >
-                  NGO Insights {ngoDropdownOpen ? "▲" : "▼"}
-                </h3>
+              <h3 onClick={() => {
+                const newVal = !ngoDropdownOpen;
+                setNGoDropdownOpen(newVal);
+                localStorage.setItem("ngoDropdownOpen", JSON.stringify(newVal));
+              }}>
+                <span className="tooltip-wrapper">
+                  ❓
+                  <span className="tooltip-text">Your information taken from IRS 990 forms</span>
+                </span>
+                NGO Insights {ngoDropdownOpen ? "▲" : "▼"}
+              </h3>
+              
                 {ngoDropdownOpen && (
                   <>
                     <div className="checkbox-group">
