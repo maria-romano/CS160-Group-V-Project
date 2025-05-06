@@ -1,4 +1,3 @@
-// src/App.jsx
 import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
@@ -6,6 +5,7 @@ import {
   Route,
   Navigate,
   useNavigate,
+  useLocation,
 } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import Dashboard from "./components/Dashboard";
@@ -19,9 +19,9 @@ import Form990Upload from "./components/Form990Upload";
 
 import "./App.css";
 
-// Create a wrapper component that has access to navigate
 function AppRoutes() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isNewSignup, setIsNewSignup] = useState(false);
   const [posts, setPosts] = useState([]);
@@ -31,7 +31,6 @@ function AppRoutes() {
   const [form990Data, setForm990Data] = useState(null);
 
   useEffect(() => {
-    // Load form990Data from localStorage on initial render
     const storedData = localStorage.getItem("form990StructuredData");
     if (storedData) {
       try {
@@ -51,15 +50,17 @@ function AppRoutes() {
     setPosts([...posts, post]);
   };
 
-  // Handle form 990 upload completion
   const handleForm990Upload = (data) => {
     setForm990Data(data);
     setIsNewSignup(false);
   };
 
+  const hideNavBarRoutes = ["/profile-setup", "/form990-upload"];
+  const showNavBar = isAuthenticated && !hideNavBarRoutes.includes(location.pathname);
+
   return (
     <>
-      {isAuthenticated && <NavBar />}
+      {showNavBar && <NavBar />}
 
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -82,9 +83,7 @@ function AppRoutes() {
 
         <Route
           path="/profile-setup"
-          element={
-            <ProfileSetup onComplete={() => navigate("/form990-upload")} />
-          }
+          element={<ProfileSetup onComplete={() => navigate("/form990-upload")} />}
         />
 
         <Route

@@ -1,15 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Profile.css";
 
 function Profile({ posts }) {
   const navigate = useNavigate();
+  const [profileImage, setProfileImage] = useState(null);
+
+  useEffect(() => {
+    const storedImage = localStorage.getItem("profileImage");
+    if (storedImage) {
+      setProfileImage(storedImage);
+    }
+  }, []);
 
   return (
     <div className="profile-wrapper">
       <div className="profile-header">
         <h1>Your Posts</h1>
-        <img src="/pfp.jpg" alt="Profile" className="profile-avatar" />
+        <img
+          src={profileImage || "/pfp.jpg"}
+          alt="Profile"
+          className="profile-avatar"
+        />
       </div>
 
       <div className="posts-container">

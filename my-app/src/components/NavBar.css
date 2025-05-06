@@ -1,9 +1,25 @@
-/* NavBar.css */
 .navbar {
-  background-color: #002244; /* Dark blue */
-  padding: 1rem;
+  background-color: #002244; 
+  padding: 1rem 2rem;
   display: flex;
-  justify-content: center;
+  justify-content: space-between; 
+  align-items: center; 
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo-image {
+  height: 40px;
+}
+
+.logo-text {
+  color: white;
+  font-weight: bold;
+  font-size: 1.5rem;
 }
 
 .nav-links {
@@ -12,7 +28,6 @@
   gap: 2rem;
   margin: 0;
   padding: 0;
-  justify-content: right;
 }
 
 .nav-links li a {
