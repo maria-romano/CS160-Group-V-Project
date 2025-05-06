@@ -15,53 +15,50 @@ import {
 import { fetchAndParseReagentData } from "../utils/fetchReagentData";
 
 const fallbackData = {
-  organization_info: {
-    foundation_name: "The Rockefeller Foundation",
-    EIN: "13-1659629",
-    tax_year: "2020",
+  organization_info : {
+    foundation_name: "SEACOLOGY",
+    EIN: "87-0495235",
+    tax_year: "2022",
     address: {
-      street: "420 Fifth Avenue",
-      city: "New York",
-      state: "NY",
-      ZIP: "10018-2702",
+      street: "1623 SOLANO AVENUE",
+      city: "BERKELEY",
+      state: "CA",
+      ZIP: "94707"
     },
-    telephone: "(212) 852-8361",
+    telephone: "(510) 559-3505",
+    website: "WWW.SEACOLOGY.ORG",
+    principal_officer: {
+      name: "DUANE SILVERSTEIN",
+      address: "1623 SOLANO AVENUE, BERKELEY, CA 94707"
+    },
+    year_of_formation: 1991,
+    state_of_legal_domicile: "CA"
   },
   financials: {
-    total_revenue: 356063644,
-    total_expenses: 285600759,
-    net_investment_income: 72587310,
-    disbursements_for_charitable_purposes: 268539317,
-    contributions_gifts_grants_received: 11539,
-    net_assets_or_fund_balances: {
-      beginning_of_year: 4795538000,
-      end_of_year: 6281040714,
-    },
+    total_revenue: 3256392,
+    total_expenses: 2820441,
+    net_investment_income: 296036,
+    disbursements_for_charitable_purposes: 982256, 
     total_assets: {
-      beginning_of_year: 4929907452,
-      end_of_year: 7117904789,
+      beginning_of_year: 10971501,
+      end_of_year: 10148588
     },
     liabilities: {
-      beginning_of_year: 134369452,
-      end_of_year: 836864075,
+      beginning_of_year: 143166,
+      end_of_year: 427195
     },
+    net_assets_or_fund_balances: {
+      beginning_of_year: 10828335,
+      end_of_year: 9721933
+    }
   },
   expenses_breakdown: {
-    compensation_of_officers_directors: 4119227,
-    other_employee_salaries_and_wages: 33798097,
-    pension_plans_employee_benefits: 10848559,
-    legal_fees: 3005616,
-    accounting_fees: 529420,
-    other_professional_fees: 37310910,
-    interest: 332901,
-    taxes: 653416,
-    depreciation: 2790352,
-    occupancy: 3282507,
-    travel_conferences_meetings: 2010511,
-    printing_and_publications: 367586,
-    other_expenses: 11322353,
-    contributions_gifts_grants_paid: 175229304,
-  },
+    contributions_gifts_grants_paid: 982256,
+    salaries: 1181958,
+    professional_fundraising_fees: 0,
+    other_expenses: 656227,
+    total_functional_expenses: 3824427
+  }
 };
 
 // Add this function to normalize data format
