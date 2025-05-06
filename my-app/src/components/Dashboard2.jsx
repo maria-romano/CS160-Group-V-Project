@@ -313,16 +313,19 @@ export default function Dashboard2({
             { name: "Start", value: financials[key]?.beginning_of_year || 0 },
             { name: "End", value: financials[key]?.end_of_year || 0 },
           ]}
+          margin={{ top: 10, right: 30, left: 0, bottom: 10 }} // ← extra left margin
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" stroke="#fff" />
-          <YAxis stroke="#fff" />
+          <YAxis stroke="#fff" width={100} /> {/* ← wider Y-axis */}
           <Tooltip formatter={(val) => `$${val.toLocaleString()}`} />
-          <Line type="monotone" dataKey="value" stroke="#00C49F" />
+          <Line type="monotone" dataKey="value" stroke="#00C49F" dot />
         </LineChart>
       </ResponsiveContainer>
     </div>
   );
+  
+  
 
   const renderExpensesBar = () => {
     const formatted = Object.entries(breakdown).map(([label, value]) => ({
@@ -330,21 +333,25 @@ export default function Dashboard2({
       value,
     }));
     const total = formatted.reduce((sum, d) => sum + d.value, 0);
-
+  
     return (
       <div className="chart-card">
         <h3>Total Expenses: ${total.toLocaleString()}</h3>
-        <ResponsiveContainer width="100%" height={400}>
-          <BarChart data={formatted}>
+        <ResponsiveContainer width="100%" height={450}>
+          <BarChart
+            data={formatted}
+            margin={{ top: 10, right: 30, left: 100, bottom: 120 }} // ← ample bottom for angled X labels
+          >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis
               dataKey="label"
               stroke="#fff"
               angle={-45}
               textAnchor="end"
-              height={100}
+              interval={0}
+              height={120}
             />
-            <YAxis stroke="#fff" />
+            <YAxis stroke="#fff" width={100} /> {/* ← fix Y-axis clipping */}
             <Tooltip formatter={(value) => [`$${value.toLocaleString()}`]} />
             <Bar dataKey="value" fill="#FF8042" />
           </BarChart>
@@ -352,6 +359,8 @@ export default function Dashboard2({
       </div>
     );
   };
+  
+  
 
   const renderChart = (option) => {
     if (option === "donationByTime") {
@@ -407,7 +416,7 @@ export default function Dashboard2({
               <LineChart data={data}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey={xKey} stroke="#fff" />
-                <YAxis stroke="#fff" />
+                <YAxis stroke="#fff" tickFormatter={(value) => `$${value.toLocaleString()}`} />
                 <Tooltip />
                 <Legend />
                 <Line type="monotone" dataKey="value" stroke="#00C49F" />
@@ -427,10 +436,14 @@ export default function Dashboard2({
       return (
         <div className="chart-card">
           <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={data} layout="vertical">
+            <BarChart
+              data={data}
+              layout="vertical"
+              margin={{ top: 10, right: 30, left: 0, bottom: 10 }} // ← ADDED LEFT MARGIN
+            >
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis type="number" stroke="#fff" />
-              <YAxis dataKey="type" type="category" stroke="#fff" />
+              <YAxis dataKey="type" type="category" stroke="#fff" width={120} /> {/* ← FIXED WIDTH */}
               <Tooltip />
               <Legend />
               <Bar dataKey="amount" fill="#8884d8" />
@@ -452,7 +465,7 @@ export default function Dashboard2({
             <BarChart data={data}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="group" stroke="#fff" />
-              <YAxis stroke="#fff" />
+              <YAxis stroke="#fff" tickFormatter={(value) => `$${value.toLocaleString()}`} />
               <Tooltip />
               <Legend />
               <Bar dataKey="donations" fill="#00C49F" />
@@ -475,7 +488,7 @@ export default function Dashboard2({
             <BarChart data={data}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="campaign" stroke="#fff" />
-              <YAxis stroke="#fff" />
+              <YAxis stroke="#fff" tickFormatter={(value) => `$${value.toLocaleString()}`} />
               <Tooltip />
               <Legend />
               <Bar dataKey="value" fill="#FF8042" />
