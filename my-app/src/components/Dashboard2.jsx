@@ -304,6 +304,7 @@ export default function Dashboard2({
     );
   };
 
+<<<<<<< HEAD
   const renderLineChart = (key, label) => (
     <div className="chart-card" key={key}>
       <h3>{label}</h3>
@@ -366,6 +367,65 @@ export default function Dashboard2({
     if (option === "donationByTime") {
       let data = [];
       let xKey = "";
+=======
+  const renderLineChart = (key, label) => (
+    <div className="chart-card" key={key}>
+      <h3>{label}</h3>
+      <ResponsiveContainer width="100%" height={300}>
+        <LineChart
+          data={[
+            { name: "Start", value: financials[key]?.beginning_of_year || 0 },
+            { name: "End", value: financials[key]?.end_of_year || 0 },
+          ]}
+          margin={{ top: 10, right: 30, left: 0, bottom: 10 }} // ← extra left margin
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" stroke="#fff" />
+          <YAxis stroke="#fff" width={100} /> {/* ← wider Y-axis */}
+          <Tooltip formatter={(val) => `$${val.toLocaleString()}`} />
+          <Line type="monotone" dataKey="value" stroke="#00C49F" dot />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
+  );
+  
+  
+
+  const renderExpensesBar = () => {
+    const formatted = Object.entries(breakdown).map(([label, value]) => ({
+      label,
+      value,
+    }));
+    const total = formatted.reduce((sum, d) => sum + d.value, 0);
+  
+    return (
+      <div className="chart-card">
+        <h3>Total Expenses: ${total.toLocaleString()}</h3>
+        <ResponsiveContainer width="100%" height={450}>
+          <BarChart
+            data={formatted}
+            margin={{ top: 10, right: 30, left: 100, bottom: 120 }} // ← ample bottom for angled X labels
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis
+              dataKey="label"
+              stroke="#fff"
+              angle={-45}
+              textAnchor="end"
+              interval={0}
+              height={120}
+            />
+            <YAxis stroke="#fff" width={100} /> {/* ← fix Y-axis clipping */}
+            <Tooltip formatter={(value) => [`$${value.toLocaleString()}`]} />
+            <Bar dataKey="value" fill="#FF8042" />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+    );
+  };
+  
+  
+>>>>>>> 673b3673638b3f1d312ddda3afa367fb6c308375
 
       switch (timeGranularity) {
         case "weekly":
@@ -427,11 +487,44 @@ export default function Dashboard2({
       );
     }
 
+<<<<<<< HEAD
     if (option === "donorTypeChart") {
       const data = [
         { type: "New", amount: 60 },
         { type: "Returning", amount: 40 },
       ];
+=======
+      return (
+        <div>
+          <div className="time-toggle">
+            {["weekly", "monthly", "yearly"].map((granularity) => (
+              <button
+                key={granularity}
+                onClick={() => setTimeGranularity(granularity)}
+                className={`time-button ${
+                  timeGranularity === granularity ? "active" : ""
+                }`}
+              >
+                {granularity.charAt(0).toUpperCase() + granularity.slice(1)}
+              </button>
+            ))}
+          </div>
+          <div className="chart-card">
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart data={data}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey={xKey} stroke="#fff" />
+                <YAxis stroke="#fff" tickFormatter={(value) => `$${value.toLocaleString()}`} />
+                <Tooltip />
+                <Legend />
+                <Line type="monotone" dataKey="value" stroke="#00C49F" />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+      );
+    }
+>>>>>>> 673b3673638b3f1d312ddda3afa367fb6c308375
 
       return (
         <div className="chart-card">
@@ -453,11 +546,33 @@ export default function Dashboard2({
       );
     }
 
+<<<<<<< HEAD
     if (option === "donationsByDonorType") {
       const data = [
         { group: "New Donors", donations: 800 },
         { group: "Returning Donors", donations: 1200 },
       ];
+=======
+      return (
+        <div className="chart-card">
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart
+              data={data}
+              layout="vertical"
+              margin={{ top: 10, right: 30, left: 0, bottom: 10 }} // ← ADDED LEFT MARGIN
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis type="number" stroke="#fff" />
+              <YAxis dataKey="type" type="category" stroke="#fff" width={120} /> {/* ← FIXED WIDTH */}
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="amount" fill="#8884d8" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      );
+    }
+>>>>>>> 673b3673638b3f1d312ddda3afa367fb6c308375
 
       return (
         <div className="chart-card">
@@ -475,12 +590,30 @@ export default function Dashboard2({
       );
     }
 
+<<<<<<< HEAD
     if (option === "donationPerCampaign") {
       const data = [
         { campaign: "Campaign 1", value: 400 },
         { campaign: "Campaign 2", value: 650 },
         { campaign: "Campaign 3", value: 300 },
       ];
+=======
+      return (
+        <div className="chart-card">
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={data}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="group" stroke="#fff" />
+              <YAxis stroke="#fff" tickFormatter={(value) => `$${value.toLocaleString()}`} />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="donations" fill="#00C49F" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      );
+    }
+>>>>>>> 673b3673638b3f1d312ddda3afa367fb6c308375
 
       return (
         <div className="chart-card">
@@ -498,8 +631,26 @@ export default function Dashboard2({
       );
     }
 
+<<<<<<< HEAD
     return null;
   };
+=======
+      return (
+        <div className="chart-card">
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={data}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="campaign" stroke="#fff" />
+              <YAxis stroke="#fff" tickFormatter={(value) => `$${value.toLocaleString()}`} />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="value" fill="#FF8042" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      );
+    }
+>>>>>>> 673b3673638b3f1d312ddda3afa367fb6c308375
 
   const handleBulkSelect = (keys) => {
     setSelectedOptions((prev) => {
