@@ -18,6 +18,11 @@ strong {
   color:white;
 }
 
+.label {
+  font-weight: 600; /* Semi-bold */
+  color: grey;
+}
+
 .profile-wrapper {
     background-color: rgba(255, 255, 255, 0);
     padding: 2rem;

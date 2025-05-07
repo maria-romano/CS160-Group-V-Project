@@ -72,18 +72,18 @@ function Profile({ posts }) {
               </div>
 
               <div className="post-stats">
-                <div>
-                  <strong>Impressions:</strong> <span>0</span>
-                </div>
-                <div>
-                  <strong>Engagements:</strong> <span>0</span>
-                </div>
-                <div>
-                  <strong>Profile Visits:</strong> <span>0</span>
-                </div>
-                <div>
-                  <strong>Shares:</strong> <span>0</span>
-                </div>
+              <div>
+                <span class="label">Impressions:</span> <span>0</span>
+              </div>
+              <div>
+                <span class="label">Engagements:</span> <span>0</span>
+              </div>
+              <div>
+                <span class="label">Profile Visits:</span> <span>0</span>
+              </div>
+              <div>
+                <span class="label">Shares:</span> <span>0</span>
+              </div>
               </div>
             </div>
           ))
