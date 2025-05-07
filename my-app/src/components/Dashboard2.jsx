@@ -61,25 +61,16 @@ const fallbackData = {
   }
 };
 
-// Add this function to normalize data format
 const normalizeData = (inputData) => {
-  // Check if this is the Reagent API format or our fallback format
   if (!inputData) return fallbackData;
-
-  // If it already has the expected structure, return as is
   if (
     inputData.organization_info &&
     inputData.financials &&
     inputData.expenses_breakdown
   ) {
-    console.log("Data already in expected format");
     return inputData;
   }
-
-  // Otherwise, try to map the Reagent API response to our expected format
-  console.log("Normalizing data format from Reagent API");
   try {
-    // This is a simplified example - adjust based on actual Reagent API response
     return {
       organization_info: {
         foundation_name: inputData.organization?.name || "Unknown Foundation",
@@ -102,15 +93,15 @@ const normalizeData = (inputData) => {
         contributions_gifts_grants_received: inputData.financials?.grants || 0,
         net_assets_or_fund_balances: {
           beginning_of_year: inputData.financials?.netAssets || 0,
-          end_of_year: (inputData.financials?.netAssets || 0) * 1.1, // Estimate
+          end_of_year: (inputData.financials?.netAssets || 0) * 1.1,
         },
         total_assets: {
           beginning_of_year: inputData.financials?.totalAssets || 0,
-          end_of_year: (inputData.financials?.totalAssets || 0) * 1.05, // Estimate
+          end_of_year: (inputData.financials?.totalAssets || 0) * 1.05,
         },
         liabilities: {
           beginning_of_year: inputData.financials?.liabilities || 0,
-          end_of_year: (inputData.financials?.liabilities || 0) * 1.02, // Estimate
+          end_of_year: (inputData.financials?.liabilities || 0) * 1.02,
         },
       },
       expenses_breakdown: {
@@ -158,19 +149,13 @@ export default function Dashboard2({
     async function fetchData() {
       setIsLoading(true);
       try {
-        // First check if we have data from form990Data prop
         if (form990Data) {
-          console.log("Using form990Data from props:", form990Data);
           setData(normalizeData(form990Data));
         } else {
-          // Then check localStorage
           const storedData = localStorage.getItem("form990StructuredData");
           if (storedData) {
-            console.log("Using data from localStorage");
             setData(normalizeData(JSON.parse(storedData)));
           } else {
-            // Fall back to default data
-            console.log("Using fallback data");
             setData(fallbackData);
           }
         }
@@ -296,6 +281,7 @@ export default function Dashboard2({
       </div>
     );
   };
+
 
   const renderLineChart = (key, label) => (
     <div className="chart-card" key={key}>
