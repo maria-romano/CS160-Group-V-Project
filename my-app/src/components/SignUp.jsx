@@ -63,15 +63,14 @@ function SignUp({ onSignUp }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+  
     if (validateForm()) {
-      // Call the onSignUp function passed from App.jsx
+      localStorage.setItem("orgName", formData.orgName);
+  
       if (onSignUp) {
         onSignUp();
       }
-
-      // Navigate to dashboard
-      //navigate('/dashboard');
+  
       navigate("/profile-setup");
     }
   };

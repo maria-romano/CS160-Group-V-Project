@@ -4,6 +4,7 @@ import "./Profile.css";
 
 function Profile({ posts }) {
   const [profileImage, setProfileImage] = useState(null);
+  const [orgName, setOrgName] = useState("");
   const [orgMission, setOrgMission] = useState("");
   const [fundDirection, setFundDirection] = useState("");
   const [selectedCauses, setSelectedCauses] = useState([]);
@@ -11,6 +12,7 @@ function Profile({ posts }) {
 
   useEffect(() => {
     setProfileImage(localStorage.getItem("profileImage"));
+    setOrgName(localStorage.getItem("orgName") || "");
     setOrgMission(localStorage.getItem("orgMission") || "");
     setFundDirection(localStorage.getItem("fundDirection") || "");
     const causes = localStorage.getItem("selectedCauses");
@@ -24,7 +26,7 @@ function Profile({ posts }) {
   return (
     <div className="profile-wrapper">
       <div className="profile-header">
-        <h1>Your Profile</h1>
+        <h1>{orgName || "Profile"}</h1>
         <img
           src={profileImage || "/pfp.jpg"}
           alt="Profile"
@@ -91,6 +93,7 @@ function Profile({ posts }) {
       <button className="create-post-button" onClick={handleCreatePost}>
         Create Post
       </button>
+      
     </div>
   );
 }
