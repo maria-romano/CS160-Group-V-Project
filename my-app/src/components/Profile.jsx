@@ -3,20 +3,28 @@ import { useNavigate } from "react-router-dom";
 import "./Profile.css";
 
 function Profile({ posts }) {
-  const navigate = useNavigate();
   const [profileImage, setProfileImage] = useState(null);
+  const [orgMission, setOrgMission] = useState("");
+  const [fundDirection, setFundDirection] = useState("");
+  const [selectedCauses, setSelectedCauses] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const storedImage = localStorage.getItem("profileImage");
-    if (storedImage) {
-      setProfileImage(storedImage);
-    }
+    setProfileImage(localStorage.getItem("profileImage"));
+    setOrgMission(localStorage.getItem("orgMission") || "");
+    setFundDirection(localStorage.getItem("fundDirection") || "");
+    const causes = localStorage.getItem("selectedCauses");
+    setSelectedCauses(causes ? JSON.parse(causes) : []);
   }, []);
+
+  const handleCreatePost = () => {
+    navigate("/create-post");
+  };
 
   return (
     <div className="profile-wrapper">
       <div className="profile-header">
-        <h1>Your Posts</h1>
+        <h1>Your Profile</h1>
         <img
           src={profileImage || "/pfp.jpg"}
           alt="Profile"
@@ -24,6 +32,20 @@ function Profile({ posts }) {
         />
       </div>
 
+      <div className="profile-section">
+        <p><strong>Bio:</strong> {orgMission}</p>
+        <p><strong>Where do you want to direct your funds?</strong> {fundDirection}</p>
+        <div>
+          <strong>Selected Causes:</strong>
+          <ul className="causes-list">
+            {selectedCauses.map((cause, index) => (
+              <li key={index}>{cause}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <h2>Your Posts</h2>
       <div className="posts-container">
         {posts.length === 0 ? (
           <p>No posts yet.</p>
@@ -66,10 +88,7 @@ function Profile({ posts }) {
         )}
       </div>
 
-      <button
-        className="create-post-button"
-        onClick={() => navigate("/create-post")}
-      >
+      <button className="create-post-button" onClick={handleCreatePost}>
         Create Post
       </button>
     </div>
