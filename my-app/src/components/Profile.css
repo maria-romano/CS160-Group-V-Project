@@ -1,3 +1,23 @@
+h1 {
+  color: white;
+}
+
+p {
+  color:white;
+}
+
+h2 {
+  color : white;
+}
+
+li {
+  color: white;
+}
+
+strong {
+  color:white;
+}
+
 .profile-wrapper {
     background-color: rgba(255, 255, 255, 0);
     padding: 2rem;
