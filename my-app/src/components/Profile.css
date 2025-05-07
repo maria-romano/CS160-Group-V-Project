@@ -3,7 +3,7 @@ h1 {
 }
 
 p {
-  color:white;
+  color:rgb(158, 154, 154);
 }
 
 h2 {
@@ -11,11 +11,11 @@ h2 {
 }
 
 li {
-  color: white;
+  color: rgb(158, 154, 154);
 }
 
 strong {
-  color:white;
+  color:rgb(158, 154, 154);
 }
 
 .label {
