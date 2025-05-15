@@ -17,6 +17,7 @@ DonorLoop helps nonprofits build donor trust by transforming complex IRS 990 for
    - Click agree with terms and join to finish the account creation process
 2. Profile Setup
    - Upload an image for your profile picture here:
+
      <img width="143" alt="Screenshot 2025-05-14 at 9 04 30 PM" src="https://github.com/user-attachments/assets/58815f27-b51d-48a2-ad55-eb8b8de684ff" />
    - In the “Tell us about your organization’s mission” box, write a description of your mission.
    - In the “Where do you want to direct your funds?” box, describe your funding goals and priorities.
